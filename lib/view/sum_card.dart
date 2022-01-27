@@ -58,7 +58,7 @@ class _SumCardState extends State<SumCard> {
             child: FloatingActionButton(
               onPressed: displayAddHour,
               tooltip: 'Add new hour',
-              child: const Icon(Icons.sports_tennis),
+              child: const Icon(Icons.add),
             ),
           ),
         ],

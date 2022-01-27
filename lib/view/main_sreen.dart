@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../view/sum_card.dart';
-import '../model/tennis_hour.dart';
-import '../view/add_new_hour_dialog.dart';
 import '../view/listview_cards_hours.dart';
 import '../model/hour_manager.dart';
 
@@ -31,14 +29,11 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
       body: Stack(
         children: [
           ListViewCardsHours(),
           Positioned(
-            bottom: 10,
+            bottom: 5,
             child: SizedBox(
               width: MediaQuery.of(context).size.width,
               height: 100,

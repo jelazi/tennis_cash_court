@@ -47,38 +47,6 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _displayAddHour(context),
-        tooltip: 'Add new hour',
-        child: const Icon(Icons.sports_tennis),
-      ),
     );
-  }
-
-  _displayAddHour(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      transitionDuration: const Duration(milliseconds: 500),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
-        );
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return AddNewHourDialog(
-            addNewHour, context, animation, secondaryAnimation);
-      },
-    );
-  }
-
-  void addNewHour(TennisHour tennisHour) {
-    setState(() {
-      widget.hourManager.listTennisHours.add(tennisHour);
-    });
   }
 }

@@ -17,8 +17,6 @@ class _ListViewCardsHoursState extends State<ListViewCardsHours> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      scrollDirection: Axis.vertical,
-      shrinkWrap: true,
       padding: const EdgeInsets.all(5.5),
       itemCount: widget.hourManager.listTennisHours.length,
       itemBuilder: _itemBuilder,

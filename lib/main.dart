@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/hour_manager.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
-import 'package:tennis_cash_court/view/add_new_hour_dialog.dart';
+
+import './view/sum_card.dart';
+import './model/hour_manager.dart';
+import './model/tennis_hour.dart';
+import './view/add_new_hour_dialog.dart';
 import './view/listview_cards_hours.dart';
 
 void main() {
@@ -11,7 +13,6 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -42,22 +43,25 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text(widget.title),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListViewCardsHours(),
-            Container(
-              child: Text('Summary: ' +
-                  widget.hourManager.summary.toString() +
-                  widget.hourManager.currency),
-            )
-          ],
-        ),
+      body: Stack(
+        children: [
+          Container(
+            child: ListViewCardsHours(),
+          ),
+          Positioned(
+            bottom: 10,
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: 100,
+              child: SumCard(),
+            ),
+          ),
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _displayAddHour(context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        tooltip: 'Add new hour',
+        child: const Icon(Icons.sports_tennis),
       ),
     );
   }

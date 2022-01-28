@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './view/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import './model/share_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

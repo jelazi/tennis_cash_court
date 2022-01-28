@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:tennis_cash_court/model/database_model.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
 import '../model/hour_manager.dart';
+import '../model/share_preferences.dart';
 
 class SyncScreen extends StatefulWidget {
   late HourManager hourManager;
+  late DatabaseModel databaseModel;
 
   SyncScreen() {
     hourManager = HourManager();
+    databaseModel = DatabaseModel();
   }
 
   @override
@@ -17,27 +21,41 @@ class SyncScreen extends StatefulWidget {
 class _SyncScreenState extends State<SyncScreen> {
   final databaseReference = FirebaseDatabase.instance.ref();
 
-  void createRecord() {
-    int index = 0;
-    for (TennisHour hour in widget.hourManager.listTennisHours) {
-      databaseReference.child('hour' + index.toString()).set(hour.toMap());
-      index++;
-    }
+  void updateDataToServerFirebase() {
+    widget.databaseModel.setTennisHoursList(widget.hourManager.listTennisHours);
   }
 
-  void getData() {
-    databaseReference.once().then((event) {
-      final dataSnapshot = event.snapshot;
+  void viewDataFirebase() {
+    List<TennisHour> tennisHourList =
+        widget.databaseModel.getTennisHourListFromDatabase();
+    tennisHourList.map((e) => print(e.toMap())).toList();
+  }
 
-      Map<dynamic, dynamic>? map = dataSnapshot.value as Map?;
-      List listData = map!.values.toList();
-      List<TennisHour> tennisHour = [];
-      for (Map mapHour in listData) {
-        TennisHour hour = TennisHour.fromMap(mapHour);
-        tennisHour.add(hour);
-      }
-      print(tennisHour.length);
-    });
+  void updateDataFromServerFirebase() {
+    print('from server');
+    List<TennisHour> tennisHourList =
+        widget.databaseModel.getTennisHourListFromDatabase();
+    tennisHourList.map((e) => print(e.toMap())).toList();
+    widget.hourManager.updateDatas(tennisHourList);
+  }
+
+  void deleteDataFirebase() {
+    widget.databaseModel.deleteAllData();
+  }
+
+  void getDataFromPreferences() {
+    PreferencesModel preferencesModel = PreferencesModel();
+    preferencesModel.getDataFromPreferences();
+  }
+
+  void deleteDataPreferences() {
+    PreferencesModel preferencesModel = PreferencesModel();
+    preferencesModel.deleteDataPreferences();
+  }
+
+  void saveDataPreferences() {
+    PreferencesModel preferencesModel = PreferencesModel();
+    preferencesModel.saveDataToPreferences();
   }
 
   @override
@@ -50,8 +68,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () => createRecord(),
-                child: Text("Create Record"),
+                onPressed: () => updateDataToServerFirebase(),
+                child: Text("Update data to server"),
               ),
             ),
           ),
@@ -60,8 +78,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: () => getData(),
-                child: Text("View Record"),
+                onPressed: updateDataFromServerFirebase,
+                child: Text("Update data from server"),
               ),
             ),
           ),
@@ -70,8 +88,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: null,
-                child: Text("Update Record"),
+                onPressed: () => viewDataFirebase(),
+                child: Text("View Data"),
               ),
             ),
           ),
@@ -80,8 +98,38 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: null,
-                child: Text("Delete Record"),
+                onPressed: deleteDataFirebase,
+                child: Text("Delete data"),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: getDataFromPreferences,
+                child: Text("get data from preferences"),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: saveDataPreferences,
+                child: Text("save data preferences"),
+              ),
+            ),
+          ),
+          SizedBox(
+            width: double.infinity,
+            child: Padding(
+              padding: EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                onPressed: deleteDataPreferences,
+                child: Text("deletedata from preferences"),
               ),
             ),
           ),

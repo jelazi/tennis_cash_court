@@ -1,15 +1,19 @@
-import 'package:flutter/foundation.dart';
+import 'package:tennis_cash_court/model/share_preferences.dart';
 import '../model/tennis_hour.dart';
 
 class HourManager {
-  List<TennisHour> listTennisHours = [];
+  List<TennisHour> _listTennisHours = [];
   String currency = 'Kč';
   static final HourManager _hourManager = HourManager._internal();
   double priceForHour = 100;
 
+  List<TennisHour> get listTennisHours {
+    return _listTennisHours;
+  }
+
   double get summaryCurrent {
     double sum = 0;
-    listTennisHours
+    _listTennisHours
         .map((hour) => {if (!hour.isSold) sum += (hour.hours * priceForHour)})
         .toList();
     return sum;
@@ -17,7 +21,7 @@ class HourManager {
 
   double get summaryHours {
     double sum = 0;
-    listTennisHours
+    _listTennisHours
         .map((hour) => {if (!hour.isSold) sum += hour.hours})
         .toList();
     return sum;
@@ -28,18 +32,40 @@ class HourManager {
   }
 
   HourManager._internal() {
-    _loadDefaultData();
+    // _loadDefaultData();
   }
 
-  void _loadDefaultData() {
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 9), 2, 'Pazit'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 10), 2.5, 'Danek'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 11), 3.5, 'Jarin'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 9), 2, 'Pazit'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 10), 2.5, 'Danek'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 11), 3.5, 'Jarin'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 9), 2, 'Pazit'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 10), 2.5, 'Danek'));
-    listTennisHours.add(TennisHour(DateTime.utc(2021, 11, 11), 3.5, 'Jarin'));
+  void loadData() async {
+    PreferencesModel preferencesModel = PreferencesModel();
+    preferencesModel
+        .getDataFromPreferences()
+        .then((value) => _listTennisHours = value)
+        .then(
+            (value) => _listTennisHours.map((e) => print(e.toMap())).toList());
+  }
+
+  void addNewHour(TennisHour tennisHour) {
+    _listTennisHours.add(tennisHour);
+    _setData();
+  }
+
+  void _setData() async {
+    PreferencesModel preferencesModel = PreferencesModel();
+    preferencesModel.saveDataToPreferences();
+  }
+
+  void updateDatas(List<TennisHour> data) {
+    for (TennisHour hour in data) {
+      bool isUpdate = false;
+      for (TennisHour hourCur in _listTennisHours) {
+        isUpdate = hourCur.updateDatas(hour);
+      }
+      if (!isUpdate) _listTennisHours.add(hour);
+    }
+  }
+
+  void deleteHour(TennisHour hourForDelete) {
+    _listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
+    _setData();
   }
 }

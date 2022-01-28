@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tennis_cash_court/model/tennis_hour.dart';
 
 import '../view/sum_card.dart';
 import '../view/listview_cards_hours.dart';
@@ -31,17 +32,48 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          ListViewCardsHours(),
+          ListViewCardsHours(
+            widget.hourManager.listTennisHours,
+            deleteHour,
+            editHour,
+          ),
           Positioned(
             bottom: 5,
             child: SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: 100,
-              child: SumCard(),
-            ),
+                width: MediaQuery.of(context).size.width,
+                height: 100,
+                child: SumCard(setState)),
           ),
         ],
       ),
     );
+  }
+
+  void deleteHour(TennisHour hour) {
+    setState(() {
+      print('deleteHour');
+      widget.hourManager.deleteHour(hour);
+    });
+  }
+
+  void editHour(TennisHour hour) {
+    setState(() {
+      print('edit Hour');
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {
+          widget.hourManager.loadData();
+        }));
+  }
+
+  @override
+  void setState(VoidCallback fn) {
+    // TODO: implement setState
+    super.setState(fn);
+    print('setState main screen');
   }
 }

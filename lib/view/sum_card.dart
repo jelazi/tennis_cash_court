@@ -5,8 +5,9 @@ import '../model/tennis_hour.dart';
 
 class SumCard extends StatefulWidget {
   late HourManager hourManager;
+  Function setState;
 
-  SumCard() {
+  SumCard(this.setState) {
     hourManager = HourManager();
   }
 
@@ -88,8 +89,8 @@ class _SumCardState extends State<SumCard> {
   }
 
   void addNewHour(TennisHour tennisHour) {
-    setState(() {
-      widget.hourManager.listTennisHours.add(tennisHour);
+    widget.setState(() {
+      widget.hourManager.addNewHour(tennisHour);
     });
   }
 }

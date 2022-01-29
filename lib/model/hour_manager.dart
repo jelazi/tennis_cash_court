@@ -13,10 +13,22 @@ class HourManager {
 
   double get summaryCurrent {
     double sum = 0;
-    _listTennisHours
-        .map((hour) => {if (!hour.isSold) sum += (hour.hours * priceForHour)})
-        .toList();
+    _listTennisHours.map((hour) {
+      int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
+      if (!hour.isSold) sum += (hour.hours * (priceForHour / sumPartners));
+    }).toList();
     return sum;
+  }
+
+  List<String> getListCurrentPartners() {
+    List<String> list = [''];
+    _listTennisHours.map((hour) {
+      hour.partner.map((partner) {
+        if (!list.contains(partner)) list.add(partner);
+      }).toList();
+    }).toList();
+    list.add('..add new name');
+    return list;
   }
 
   double get summaryHours {
@@ -39,9 +51,7 @@ class HourManager {
     PreferencesModel preferencesModel = PreferencesModel();
     preferencesModel
         .getDataFromPreferences()
-        .then((value) => _listTennisHours = value)
-        .then(
-            (value) => _listTennisHours.map((e) => print(e.toMap())).toList());
+        .then((value) => _listTennisHours = value);
   }
 
   void addNewHour(TennisHour tennisHour) {

@@ -1,9 +1,10 @@
 import 'package:uuid/uuid.dart';
+import 'dart:convert';
 
 class TennisHour {
   late double hours;
   late DateTime date;
-  late String partner;
+  late List partner = [];
   bool _isSold = false;
   late String id;
 
@@ -37,8 +38,8 @@ class TennisHour {
 
   TennisHour.fromMap(Map map) {
     date = (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
-    hours = (map['hours'] != null) ? double.parse(map['hours'].toString()) : 0;
-    partner = map['partner'] ?? '';
+    hours = (map['hours'] != null) ? map['hours'] : 0;
+    partner = (map['partner'] != null) ? map['partner'] : [];
     _isSold = map['isSold'] == 'true' ? true : false;
     id = map['id'] ?? '';
   }

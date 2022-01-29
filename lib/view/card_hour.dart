@@ -80,7 +80,7 @@ class _CardHourState extends State<CardHour> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Partner: ' + widget.tennisHour.partner,
+                    'Partner: ' + widget.tennisHour.partner.join(", "),
                     style: const TextStyle(
                       color: Colors.blueAccent,
                       fontWeight: FontWeight.bold,

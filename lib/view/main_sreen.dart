@@ -51,7 +51,6 @@ class _MainScreenState extends State<MainScreen> {
 
   void deleteHour(TennisHour hour) {
     setState(() {
-      print('deleteHour');
       widget.hourManager.deleteHour(hour);
     });
   }
@@ -68,12 +67,5 @@ class _MainScreenState extends State<MainScreen> {
     WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {
           widget.hourManager.loadData();
         }));
-  }
-
-  @override
-  void setState(VoidCallback fn) {
-    // TODO: implement setState
-    super.setState(fn);
-    print('setState main screen');
   }
 }

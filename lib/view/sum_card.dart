@@ -30,14 +30,14 @@ class _SumCardState extends State<SumCard> {
       child: Stack(
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Summary hours: ' +
-                      widget.hourManager.summaryHours.toString() +
+                  'Total hours: ' +
+                      widget.hourManager.summaryHours.toStringAsFixed(1) +
                       ' hours',
                   style: sumStyle,
                 ),
@@ -45,8 +45,8 @@ class _SumCardState extends State<SumCard> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Summary current: ' +
-                      widget.hourManager.summaryCurrent.toString() +
+                  'Total price: ' +
+                      widget.hourManager.totalPrice.toStringAsFixed(0) +
                       ' ' +
                       widget.hourManager.currency,
                   style: sumStyle,

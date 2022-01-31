@@ -11,10 +11,11 @@ class HourManager {
     return _listTennisHours;
   }
 
-  double get summaryCurrent {
+  double get totalPrice {
     double sum = 0;
     _listTennisHours.map((hour) {
       int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
+
       if (!hour.isSold) sum += (hour.hours * (priceForHour / sumPartners));
     }).toList();
     return sum;

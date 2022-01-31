@@ -8,12 +8,12 @@ import 'package:tennis_cash_court/model/tennis_hour.dart';
 class AddNewHourDialog extends StatefulWidget {
   Function addNewHour;
   late HourManager hourManager;
-  late List<String> partnersValues;
+  late List<String> possiblePartnerCardsNames;
 
   AddNewHourDialog(this.addNewHour, BuildContext context,
       Animation<double> animation, Animation<double> secondaryAnimation) {
     hourManager = HourManager();
-    partnersValues = hourManager.getListCurrentPartners();
+    possiblePartnerCardsNames = hourManager.getListCurrentPartners();
   }
 
   @override
@@ -33,10 +33,10 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
     fontWeight: FontWeight.bold,
     fontSize: 20,
   );
-  List<String> partnerCards = [''];
+  List<String> currentPartnerCardsNames = [''];
+  TextEditingController textFieldController = TextEditingController();
 
   _AddNewHourDialogState();
-  TextEditingController textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -49,11 +49,11 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
             child: GestureDetector(
               onTap: () {
                 bool isCorrect = true;
-                partnerCards.map((e) {
-                  for (int i = partnerCards.indexOf(e) + 1;
-                      i < partnerCards.length;
+                currentPartnerCardsNames.map((e) {
+                  for (int i = currentPartnerCardsNames.indexOf(e) + 1;
+                      i < currentPartnerCardsNames.length;
                       i++) {
-                    if (e == partnerCards[i]) {
+                    if (e == currentPartnerCardsNames[i]) {
                       var snackBar = SnackBar(
                         content: Text("Two same name partners!"),
                       );
@@ -63,13 +63,15 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                   }
                 }).toList();
                 if (isCorrect) {
-                  partnerCards.toSet().toList(); //remove more empty string;
-                  partnerCards.remove('');
+                  currentPartnerCardsNames
+                      .toSet()
+                      .toList(); //remove more empty string;
+                  currentPartnerCardsNames.remove('');
                   widget.addNewHour(
                     TennisHour(
                         dateTime,
                         double.parse(numberHour.replaceAll(',', '.')),
-                        partnerCards),
+                        currentPartnerCardsNames),
                   );
                   Navigator.pop(context);
                 }
@@ -116,33 +118,30 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Partner: ',
-                      style: labelStyle,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8),
+                      child: Text(
+                        'Partner: ',
+                        style: labelStyle,
+                      ),
                     ),
                     Expanded(
                         child: Column(
-                      children: partnerCards
-                          .map(
-                            (partnerCard) => DropdownButton(
-                              value: partnerCard,
-                              items: widget.partnersValues.map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                if (newValue! == '..add new name') {
-                                  _showNewNameDialog(textFieldController);
-                                } else {
-                                  partnerCards.last = newValue;
-                                }
-                                setState(() {});
-                              },
-                            ),
-                          )
+                      children: currentPartnerCardsNames
+                          .asMap()
+                          .map((i, partnerCard) => (MapEntry(
+                                i,
+                                PartnerDropDownButton(
+                                    partnerCard,
+                                    currentPartnerCardsNames,
+                                    widget.possiblePartnerCardsNames,
+                                    textFieldController,
+                                    i,
+                                    changeName),
+                              )))
+                          .values
                           .toList(),
                     )),
                   ],
@@ -151,10 +150,8 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
               InkWell(
                   child: Text("ADD PARTNER"),
                   onTap: () {
-                    //selectedUser.add(null);
-                    //linkdevices ++;
-                    if (!partnerCards.last.isEmpty) {
-                      partnerCards.add('');
+                    if (!currentPartnerCardsNames.last.isEmpty) {
+                      currentPartnerCardsNames.add('');
                       setState(() {});
                     }
                   })
@@ -163,6 +160,12 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
         ),
       ),
     );
+  }
+
+  changeName(String newName, index) {
+    setState(() {
+      currentPartnerCardsNames[index] = newName;
+    });
   }
 
   showPickerNumber(BuildContext context) {
@@ -199,44 +202,6 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                 .replaceAll(']', '');
           });
         }).showDialog(context);
-  }
-
-  Future<void> _showNewNameDialog(
-      TextEditingController textFieldController) async {
-    String setValue = '';
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text('New partner name'),
-            content: TextField(
-              onChanged: (value) {
-                setValue = value;
-              },
-              controller: textFieldController,
-              decoration: InputDecoration(hintText: "New name"),
-            ),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  if (widget.partnersValues.contains(setValue)) {
-                    var snackBar = SnackBar(
-                      content: Text("The name $setValue exists!"),
-                    );
-                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                  } else {
-                    widget.partnersValues
-                        .insert(widget.partnersValues.length - 1, setValue);
-                    partnerCards.last = setValue;
-                    Navigator.pop(context);
-                    setState(() {});
-                  }
-                },
-                child: Text('OK'),
-              )
-            ],
-          );
-        });
   }
 }
 
@@ -282,5 +247,89 @@ class _CalendarTextState extends State<CalendarText> {
         ],
       ),
     );
+  }
+}
+
+class PartnerDropDownButton extends StatefulWidget {
+  String partnerCard;
+  List<String> currentPartnerCardsNames;
+  List<String> possiblePartnerCardsNames;
+  TextEditingController textFieldController;
+  int index;
+  Function changeName;
+
+  PartnerDropDownButton(
+      this.partnerCard,
+      this.currentPartnerCardsNames,
+      this.possiblePartnerCardsNames,
+      this.textFieldController,
+      this.index,
+      this.changeName);
+
+  @override
+  State<PartnerDropDownButton> createState() => _PartnerDropDownButtonState();
+}
+
+class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton(
+      value: widget.partnerCard,
+      items: widget.possiblePartnerCardsNames.map((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+      onChanged: (String? newValue) {
+        setState(() {
+          if (newValue! == '..add new name') {
+            _showNewNameDialog(widget.textFieldController);
+          } else {
+            widget.changeName(newValue, widget.index);
+          }
+        });
+      },
+    );
+  }
+
+  Future<void> _showNewNameDialog(
+      TextEditingController textFieldController) async {
+    String setValue = '';
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text('New partner name'),
+            content: TextField(
+              onChanged: (value) {
+                setValue = value;
+              },
+              controller: textFieldController,
+              decoration: InputDecoration(hintText: "New name"),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  if (widget.possiblePartnerCardsNames.contains(setValue)) {
+                    var snackBar = SnackBar(
+                      content: Text("The name $setValue exists!"),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  } else {
+                    setState(() {
+                      widget.possiblePartnerCardsNames.insert(
+                          widget.possiblePartnerCardsNames.length - 1,
+                          setValue);
+                      widget.currentPartnerCardsNames[widget.index] = setValue;
+                      Navigator.pop(context);
+                    });
+                  }
+                },
+                child: Text('OK'),
+              )
+            ],
+          );
+        });
   }
 }

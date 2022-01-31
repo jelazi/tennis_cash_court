@@ -30,21 +30,29 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          ListViewCardsHours(
-            widget.hourManager.listTennisHours,
-            deleteHour,
-            editHour,
-          ),
-          Positioned(
-            bottom: 5,
-            child: SizedBox(
-                width: MediaQuery.of(context).size.width,
-                height: 100,
-                child: SumCard(setState)),
-          ),
-        ],
+      body: SizedBox(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Stack(
+          children: [
+            SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height - 200,
+              child: ListViewCardsHours(
+                widget.hourManager.listTennisHours,
+                deleteHour,
+                editHour,
+              ),
+            ),
+            Positioned(
+              bottom: 5,
+              child: SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100,
+                  child: SumCard(setState)),
+            ),
+          ],
+        ),
       ),
     );
   }

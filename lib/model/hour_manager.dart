@@ -11,6 +11,12 @@ class HourManager {
     return _listTennisHours;
   }
 
+  List<Map<String, dynamic>> getListMapTennisHour() {
+    List<Map<String, dynamic>> list = [];
+    _listTennisHours.map((e) => list.add(e.toMap())).toList();
+    return list;
+  }
+
   double get totalPrice {
     double sum = 0;
     _listTennisHours.map((hour) {

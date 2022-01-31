@@ -27,6 +27,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  bool isEditable = true;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
                 widget.hourManager.listTennisHours,
                 deleteHour,
                 editHour,
+                isEditable,
               ),
             ),
             Positioned(
@@ -49,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
               child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 100,
-                  child: SumCard(setState)),
+                  child: SumCard(setState, isEditable)),
             ),
           ],
         ),

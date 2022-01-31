@@ -1,5 +1,6 @@
 import 'package:uuid/uuid.dart';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class TennisHour {
   late double hours;
@@ -25,6 +26,17 @@ class TennisHour {
       'id': id,
     };
     return map;
+  }
+
+  String getAllChars() {
+    //for filtering
+    String allChars = '';
+    allChars = hours.toString();
+    DateFormat formatter = DateFormat('dd. MM. yyyy');
+    allChars += formatter.format(date);
+    allChars += partner.join();
+    print(allChars);
+    return allChars;
   }
 
   void _generateId() {

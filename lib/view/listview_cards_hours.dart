@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
+import '../model/tennis_hour.dart';
 import '../model/hour_manager.dart';
 
 import 'card_hour.dart';
@@ -7,11 +7,13 @@ import 'card_hour.dart';
 class ListViewCardsHours extends StatefulWidget {
   final void Function(TennisHour tennisHour) deleteHour;
   final void Function(TennisHour tennisHour) editHour;
+  bool isEditable;
 
   List<TennisHour> listTennisHour;
   //Function setStateList;
 
-  ListViewCardsHours(this.listTennisHour, this.deleteHour, this.editHour);
+  ListViewCardsHours(
+      this.listTennisHour, this.deleteHour, this.editHour, this.isEditable);
 
   @override
   State<ListViewCardsHours> createState() => _ListViewCardsHoursState();
@@ -33,6 +35,7 @@ class _ListViewCardsHoursState extends State<ListViewCardsHours> {
         widget.listTennisHour[index],
         widget.deleteHour,
         widget.editHour,
+        widget.isEditable,
       ),
     );
   }

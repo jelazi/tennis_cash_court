@@ -6,8 +6,9 @@ import '../model/tennis_hour.dart';
 class SumCard extends StatefulWidget {
   late HourManager hourManager;
   Function setState;
+  bool addVisible;
 
-  SumCard(this.setState) {
+  SumCard(this.setState, this.addVisible) {
     hourManager = HourManager();
   }
 
@@ -30,7 +31,7 @@ class _SumCardState extends State<SumCard> {
       child: Stack(
         children: [
           Column(
-            mainAxisAlignment: MainAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -54,14 +55,16 @@ class _SumCardState extends State<SumCard> {
               )
             ],
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: FloatingActionButton(
-              onPressed: displayAddHour,
-              tooltip: 'Add new hour',
-              child: const Icon(Icons.add),
-            ),
-          ),
+          widget.addVisible
+              ? Align(
+                  alignment: Alignment.centerRight,
+                  child: FloatingActionButton(
+                    onPressed: displayAddHour,
+                    tooltip: 'Add new hour',
+                    child: const Icon(Icons.add),
+                  ),
+                )
+              : Container(),
         ],
       ),
     );

@@ -28,7 +28,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
     fontWeight: FontWeight.bold,
     fontSize: 25,
   );
-  TextStyle editTextStyle = TextStyle(
+  TextStyle editTextStyle = const TextStyle(
     color: Colors.black87,
     fontWeight: FontWeight.bold,
     fontSize: 20,

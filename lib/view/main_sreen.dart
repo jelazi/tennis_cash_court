@@ -40,7 +40,7 @@ class _MainScreenState extends State<MainScreen> {
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 200,
               child: ListViewCardsHours(
-                widget.hourManager.listTennisHours,
+                widget.hourManager.getListTennisHoursUnPaid(),
                 deleteHour,
                 editHour,
                 isEditable,

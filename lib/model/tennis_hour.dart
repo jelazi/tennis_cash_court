@@ -5,7 +5,7 @@ class TennisHour {
   late double hours;
   late DateTime date;
   List partner = [];
-  bool _isSold = false;
+  bool _isPayd = false;
   late String id;
 
   TennisHour(
@@ -17,16 +17,16 @@ class TennisHour {
     date = (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
     hours = (map['hours'] != null) ? map['hours'] : 0;
     partner = (map['partner'] != null) ? map['partner'] : [];
-    _isSold = map['isSold'] == 'true' ? true : false;
+    _isPayd = map['isSold'] == 'true' ? true : false;
     id = map['id'] ?? '';
   }
 
-  bool get isSold {
-    return _isSold;
+  bool get isPayd {
+    return _isPayd;
   }
 
-  set isSold(bool isSold) {
-    _isSold = isSold;
+  set isPayd(bool isPayd) {
+    _isPayd = isPayd;
   }
 
   Map<String, dynamic> toMap() {
@@ -34,7 +34,7 @@ class TennisHour {
       'hours': hours,
       'date': date.toString(),
       'partner': partner,
-      'isSold': _isSold.toString(),
+      'isSold': _isPayd.toString(),
       'id': id,
     };
     return map;
@@ -57,7 +57,7 @@ class TennisHour {
 
   bool updateDatas(TennisHour hourUpdate) {
     if (hourUpdate.id != id) return false;
-    _isSold = hourUpdate.isSold;
+    _isPayd = hourUpdate.isPayd;
     hours = hourUpdate.hours;
     partner = hourUpdate.partner;
     date = hourUpdate.date;

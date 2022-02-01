@@ -8,15 +8,15 @@ import './settings_screen.dart';
 import './main_sreen.dart';
 import './custom_navbar_widget.dart';
 
-class CustomWidgetExample extends StatefulWidget {
+class CustomWidget extends StatefulWidget {
   final BuildContext menuScreenContext;
-  CustomWidgetExample(this.menuScreenContext);
+  CustomWidget(this.menuScreenContext);
 
   @override
-  _CustomWidgetExampleState createState() => _CustomWidgetExampleState();
+  _CustomWidgetState createState() => _CustomWidgetState();
 }
 
-class _CustomWidgetExampleState extends State<CustomWidgetExample> {
+class _CustomWidgetState extends State<CustomWidget> {
   late PersistentTabController _controller;
   late bool _hideNavBar;
   String title = 'Title';
@@ -95,8 +95,8 @@ class _CustomWidgetExampleState extends State<CustomWidgetExample> {
         backgroundColor: Colors.white, // Default is Colors.white.
         handleAndroidBackButtonPress: true, // Default is true.
         resizeToAvoidBottomInset:
-            true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-        stateManagement: true, // Default is true.
+            false, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
+        stateManagement: false, // Default is true.
         hideNavigationBarWhenKeyboardShows:
             true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
         decoration: NavBarDecoration(
@@ -119,31 +119,6 @@ class _CustomWidgetExampleState extends State<CustomWidgetExample> {
         navBarStyle:
             NavBarStyle.style6, // Choose the nav bar style with this property.
       ),
-
-      /*PersistentTabView.custom(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        confineInSafeArea: true,
-        itemCount: 5,
-        handleAndroidBackButtonPress: true,
-        stateManagement: true,
-        hideNavigationBar: _hideNavBar,
-        screenTransitionAnimation: ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        customWidget: CustomNavBarWidget(
-          items: _navBarsItems(),
-          onItemSelected: (index) {
-            setState(() {
-              _controller.index = index; // THIS IS CRITICAL!! Don't miss it!
-            });
-          },
-          selectedIndex: _controller.index,
-        ),
-      ),*/
     );
   }
 }

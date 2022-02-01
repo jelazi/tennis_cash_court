@@ -42,7 +42,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add new Tennis course'),
+        title: const Text('Add new Tennis course'),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -54,7 +54,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                       i < currentPartnerCardsNames.length;
                       i++) {
                     if (e == currentPartnerCardsNames[i]) {
-                      var snackBar = SnackBar(
+                      var snackBar = const SnackBar(
                         content: Text("Two same name partners!"),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
@@ -69,9 +69,9 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                   currentPartnerCardsNames.remove('');
                   widget.addNewHour(
                     TennisHour(
-                        dateTime,
-                        double.parse(numberHour.replaceAll(',', '.')),
-                        currentPartnerCardsNames),
+                        date: dateTime,
+                        hours: double.parse(numberHour.replaceAll(',', '.')),
+                        partner: currentPartnerCardsNames),
                   );
                   Navigator.pop(context);
                 }
@@ -88,7 +88,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
         child: Container(
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height,
-          padding: EdgeInsets.all(20),
+          padding: const EdgeInsets.all(20),
           color: Colors.white,
           child: Column(
             children: [
@@ -150,7 +150,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
               InkWell(
                   child: Text("ADD PARTNER"),
                   onTap: () {
-                    if (!currentPartnerCardsNames.last.isEmpty) {
+                    if (currentPartnerCardsNames.last.isNotEmpty) {
                       currentPartnerCardsNames.add('');
                       setState(() {});
                     }
@@ -186,12 +186,12 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
               child: Container(
             width: 30.0,
             alignment: Alignment.center,
-            child: Text(','),
+            child: const Text(','),
           ))
         ],
         hideHeader: true,
-        title: Text("Please Select Hours"),
-        selectedTextStyle: TextStyle(color: Colors.blue),
+        title: const Text("Please Select Hours"),
+        selectedTextStyle: const TextStyle(color: Colors.blue),
         onConfirm: (Picker picker, List value) {
           setState(() {
             numberHour = picker
@@ -251,20 +251,22 @@ class _CalendarTextState extends State<CalendarText> {
 }
 
 class PartnerDropDownButton extends StatefulWidget {
-  String partnerCard;
-  List<String> currentPartnerCardsNames;
-  List<String> possiblePartnerCardsNames;
-  TextEditingController textFieldController;
-  int index;
-  Function changeName;
+  final String partnerCard;
+  final List<String> currentPartnerCardsNames;
+  final List<String> possiblePartnerCardsNames;
+  final TextEditingController textFieldController;
+  final int index;
+  final Function changeName;
 
-  PartnerDropDownButton(
+  const PartnerDropDownButton(
       this.partnerCard,
       this.currentPartnerCardsNames,
       this.possiblePartnerCardsNames,
       this.textFieldController,
       this.index,
-      this.changeName);
+      this.changeName,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<PartnerDropDownButton> createState() => _PartnerDropDownButtonState();
@@ -300,13 +302,14 @@ class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text('New partner name'),
+            title: const Text('New partner name'),
             content: TextField(
+              autofocus: true,
               onChanged: (value) {
                 setValue = value;
               },
               controller: textFieldController,
-              decoration: InputDecoration(hintText: "New name"),
+              decoration: const InputDecoration(hintText: "New name"),
             ),
             actions: [
               TextButton(
@@ -326,7 +329,7 @@ class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
                     });
                   }
                 },
-                child: Text('OK'),
+                child: const Text('OK'),
               )
             ],
           );

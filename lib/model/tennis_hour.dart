@@ -1,13 +1,25 @@
 import 'package:uuid/uuid.dart';
-import 'dart:convert';
 import 'package:intl/intl.dart';
 
 class TennisHour {
   late double hours;
   late DateTime date;
-  late List partner = [];
+  List partner = [];
   bool _isSold = false;
   late String id;
+
+  TennisHour(
+      {required this.date, required this.hours, this.partner = const []}) {
+    _generateId();
+  }
+
+  TennisHour.fromMap(Map map) {
+    date = (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
+    hours = (map['hours'] != null) ? map['hours'] : 0;
+    partner = (map['partner'] != null) ? map['partner'] : [];
+    _isSold = map['isSold'] == 'true' ? true : false;
+    id = map['id'] ?? '';
+  }
 
   bool get isSold {
     return _isSold;
@@ -35,25 +47,12 @@ class TennisHour {
     DateFormat formatter = DateFormat('dd. MM. yyyy');
     allChars += formatter.format(date);
     allChars += partner.join();
-    print(allChars);
     return allChars;
   }
 
   void _generateId() {
     var uuidGener = Uuid();
     id = uuidGener.v1();
-  }
-
-  TennisHour(this.date, this.hours, this.partner) {
-    _generateId();
-  }
-
-  TennisHour.fromMap(Map map) {
-    date = (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
-    hours = (map['hours'] != null) ? map['hours'] : 0;
-    partner = (map['partner'] != null) ? map['partner'] : [];
-    _isSold = map['isSold'] == 'true' ? true : false;
-    id = map['id'] ?? '';
   }
 
   bool updateDatas(TennisHour hourUpdate) {

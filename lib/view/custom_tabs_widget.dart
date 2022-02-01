@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import './filter_screen.dart';
-import './graph_screen.dart';
+import 'Pay_screen.dart';
 import './sync_screen.dart';
 
 import './settings_screen.dart';
@@ -41,7 +41,7 @@ class _CustomWidgetState extends State<CustomWidget> {
         },
       ),
       FilterScreen(),
-      GraphScreen(),
+      PayScreen(),
       SyncScreen(),
       SettingsScreen(),
     ];

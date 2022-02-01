@@ -11,10 +11,25 @@ class HourManager {
     return _listTennisHours;
   }
 
+  List<TennisHour> getListTennisHoursUnPaid() {
+    List<TennisHour> list = [];
+    _listTennisHours.map((hour) {
+      if (!hour.isPayd) list.add(hour);
+    }).toString();
+    return list;
+  }
+
   List<Map<String, dynamic>> getListMapTennisHour() {
     List<Map<String, dynamic>> list = [];
     _listTennisHours.map((e) => list.add(e.toMap())).toList();
     return list;
+  }
+
+  void payAll() {
+    for (int i = 0; i < _listTennisHours.length; i++) {
+      _listTennisHours[i].isPayd = true;
+    }
+    _setData();
   }
 
   double get totalPrice {
@@ -22,9 +37,30 @@ class HourManager {
     _listTennisHours.map((hour) {
       int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
 
-      if (!hour.isSold) sum += (hour.hours * (priceForHour / sumPartners));
+      if (!hour.isPayd) sum += (hour.hours * (priceForHour / sumPartners));
     }).toList();
     return sum;
+  }
+
+  bool containsUnpaid() {
+    _listTennisHours.map((e) {
+      if (!e.isPayd) return true;
+    }).toList();
+    return false;
+  }
+
+  List<DateTime> getFirstLastDateUnpaid() {
+    List<DateTime> list = [];
+    if (listTennisHours.isEmpty || !containsUnpaid()) return list;
+    DateTime first = listTennisHours.first.date;
+    DateTime last = listTennisHours.first.date;
+    listTennisHours.map((e) {
+      if (first.isAfter(e.date) && !e.isPayd) first = e.date;
+      if (last.isBefore(e.date) && !e.isPayd) last = e.date;
+    }).toList();
+    list.add(first);
+    list.add(last);
+    return list;
   }
 
   List<String> getListCurrentPartners() {
@@ -41,7 +77,7 @@ class HourManager {
   double get summaryHours {
     double sum = 0;
     _listTennisHours
-        .map((hour) => {if (!hour.isSold) sum += hour.hours})
+        .map((hour) => {if (!hour.isPayd) sum += hour.hours})
         .toList();
     return sum;
   }

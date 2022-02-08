@@ -61,7 +61,8 @@ class DefaultFirebaseOptions {
     projectId: 'api-project-1083771712062',
     databaseURL: 'https://api-project-1083771712062.firebaseio.com',
     storageBucket: 'api-project-1083771712062.appspot.com',
-    iosClientId: '1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com',
+    iosClientId:
+        '1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com',
     iosBundleId: 'com.example.tennisCashCourt',
   );
 
@@ -72,7 +73,8 @@ class DefaultFirebaseOptions {
     projectId: 'api-project-1083771712062',
     databaseURL: 'https://api-project-1083771712062.firebaseio.com',
     storageBucket: 'api-project-1083771712062.appspot.com',
-    iosClientId: '1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com',
+    iosClientId:
+        '1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com',
     iosBundleId: 'com.example.tennisCashCourt',
   );
 }

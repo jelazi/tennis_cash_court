@@ -1,26 +1,13 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import './hour_manager.dart';
 import './tennis_hour.dart';
 import 'dart:convert';
 
 class PreferencesModel {
-  late HourManager hourManager;
+  PreferencesModel();
 
-  static final PreferencesModel _preferencesModel =
-      PreferencesModel._internal();
-
-  factory PreferencesModel() {
-    return _preferencesModel;
-  }
-
-  PreferencesModel._internal() {
-    hourManager = HourManager();
-  }
-
-  void saveDataToPreferences() async {
+  void saveDataToPreferences(List<TennisHour> listTennisHours) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(
-        'listHours', _encodeToJson(hourManager.listTennisHours));
+    await prefs.setString('listHours', _encodeToJson(listTennisHours));
   }
 
   Future<List<TennisHour>> getDataFromPreferences() async {

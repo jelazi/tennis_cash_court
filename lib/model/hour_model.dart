@@ -1,10 +1,10 @@
-import 'package:tennis_cash_court/model/share_preferences.dart';
-import '../model/tennis_hour.dart';
+import 'package:flutter/material.dart';
+import 'package:tennis_cash_court/model/preferences_model.dart';
+import 'package:tennis_cash_court/model/tennis_hour.dart';
 
-class HourManager {
+class HourModel extends ChangeNotifier {
   List<TennisHour> _listTennisHours = [];
   String currency = 'Kč';
-  static final HourManager _hourManager = HourManager._internal();
   double priceForHour = 100;
 
   List<TennisHour> get listTennisHours {
@@ -29,7 +29,8 @@ class HourManager {
     for (int i = 0; i < _listTennisHours.length; i++) {
       _listTennisHours[i].isPayd = true;
     }
-    _setData();
+    _setData(listTennisHours);
+    notifyListeners();
   }
 
   double get totalPrice {
@@ -82,29 +83,22 @@ class HourManager {
     return sum;
   }
 
-  factory HourManager() {
-    return _hourManager;
-  }
-
-  HourManager._internal() {
-    // _loadDefaultData();
-  }
-
   void loadData() async {
     PreferencesModel preferencesModel = PreferencesModel();
     preferencesModel
         .getDataFromPreferences()
         .then((value) => _listTennisHours = value);
+    notifyListeners();
   }
 
   void addNewHour(TennisHour tennisHour) {
     _listTennisHours.add(tennisHour);
-    _setData();
+    _setData(listTennisHours);
   }
 
-  void _setData() async {
+  void _setData(List<TennisHour> listTennisHours) async {
     PreferencesModel preferencesModel = PreferencesModel();
-    preferencesModel.saveDataToPreferences();
+    preferencesModel.saveDataToPreferences(listTennisHours);
   }
 
   void updateDatas(List<TennisHour> data) {
@@ -119,6 +113,7 @@ class HourManager {
 
   void deleteHour(TennisHour hourForDelete) {
     _listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
-    _setData();
+    _setData(listTennisHours);
+    notifyListeners();
   }
 }

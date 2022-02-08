@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../../model/tennis_hour.dart';
-import '../../model/hour_manager.dart';
 
 import 'card_hour.dart';
 

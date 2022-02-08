@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_cash_court/model/hour_model.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
 
 import '../cards/sum_card.dart';
 import '../cards/listview_cards_hours.dart';
-import '../../model/hour_manager.dart';
 
 class MainScreen extends StatefulWidget {
-  late HourManager hourManager;
   late final BuildContext menuScreenContext;
   late final Function onScreenHideButtonPressed;
   late final bool hideStatus;
@@ -17,9 +17,7 @@ class MainScreen extends StatefulWidget {
       required this.menuScreenContext,
       required this.hideStatus,
       required this.onScreenHideButtonPressed})
-      : super(key: key) {
-    hourManager = HourManager();
-  }
+      : super(key: key) {}
   final String title;
 
   @override
@@ -30,38 +28,40 @@ class _MainScreenState extends State<MainScreen> {
   bool isEditable = true;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Stack(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height - 200,
-              child: ListViewCardsHours(
-                widget.hourManager.getListTennisHoursUnPaid(),
-                deleteHour,
-                editHour,
-                isEditable,
+    return Consumer<HourModel>(builder: (context, model, _) {
+      return Scaffold(
+        body: SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height - 200,
+                child: ListViewCardsHours(
+                  model.getListTennisHoursUnPaid(),
+                  deleteHour,
+                  editHour,
+                  isEditable,
+                ),
               ),
-            ),
-            Positioned(
-              bottom: 5,
-              child: SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: 100,
-                  child: SumCard(setState, isEditable)),
-            ),
-          ],
+              Positioned(
+                bottom: 5,
+                child: SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: 100,
+                    child: SumCard(setState, isEditable)),
+              ),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   void deleteHour(TennisHour hour) {
     setState(() {
-      widget.hourManager.deleteHour(hour);
+      Provider.of<HourModel>(context, listen: false).deleteHour(hour);
     });
   }
 
@@ -75,7 +75,7 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {
-          widget.hourManager.loadData();
+          Provider.of<HourModel>(context, listen: false).loadData();
         }));
   }
 }

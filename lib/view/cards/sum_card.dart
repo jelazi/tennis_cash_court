@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/hour_manager.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_cash_court/model/hour_model.dart';
 import '../new_hour/add_new_hour_dialog.dart';
 import '../../model/tennis_hour.dart';
 
 class SumCard extends StatefulWidget {
-  late HourManager hourManager;
   Function setState;
   bool addVisible;
 
-  SumCard(this.setState, this.addVisible) {
-    hourManager = HourManager();
-  }
+  SumCard(this.setState, this.addVisible);
 
   @override
   State<SumCard> createState() => _SumCardState();
@@ -25,49 +23,51 @@ class _SumCardState extends State<SumCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 15,
-      color: Colors.blue.shade50,
-      child: Stack(
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Total hours: ' +
-                      widget.hourManager.summaryHours.toStringAsFixed(1) +
-                      ' hours',
-                  style: sumStyle,
+    return Consumer<HourModel>(builder: (context, model, _) {
+      return Card(
+        elevation: 15,
+        color: Colors.blue.shade50,
+        child: Stack(
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Total hours: ' +
+                        model.summaryHours.toStringAsFixed(1) +
+                        ' hours',
+                    style: sumStyle,
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'Total price: ' +
-                      widget.hourManager.totalPrice.toStringAsFixed(0) +
-                      ' ' +
-                      widget.hourManager.currency,
-                  style: sumStyle,
-                ),
-              )
-            ],
-          ),
-          widget.addVisible
-              ? Align(
-                  alignment: Alignment.centerRight,
-                  child: FloatingActionButton(
-                    onPressed: displayAddHour,
-                    tooltip: 'Add new hour',
-                    child: const Icon(Icons.add),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    'Total price: ' +
+                        model.totalPrice.toStringAsFixed(0) +
+                        ' ' +
+                        model.currency,
+                    style: sumStyle,
                   ),
                 )
-              : Container(),
-        ],
-      ),
-    );
+              ],
+            ),
+            widget.addVisible
+                ? Align(
+                    alignment: Alignment.centerRight,
+                    child: FloatingActionButton(
+                      onPressed: displayAddHour,
+                      tooltip: 'Add new hour',
+                      child: const Icon(Icons.add),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+      );
+    });
   }
 
   displayAddHour() {
@@ -93,7 +93,7 @@ class _SumCardState extends State<SumCard> {
 
   void addNewHour(TennisHour tennisHour) {
     widget.setState(() {
-      widget.hourManager.addNewHour(tennisHour);
+      Provider.of<HourModel>(context, listen: false).addNewHour(tennisHour);
     });
   }
 }

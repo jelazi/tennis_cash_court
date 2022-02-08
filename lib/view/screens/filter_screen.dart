@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
-import '../../model/hour_manager.dart';
+import 'package:provider/provider.dart';
+import 'package:tennis_cash_court/model/hour_model.dart';
 import '../cards/listview_cards_hours.dart';
 import '../../model/tennis_hour.dart';
 import '../cards/sum_card.dart';
 
 class FilterScreen extends StatefulWidget {
-  List<TennisHour> _allUsers = [];
-  late HourManager hourManager;
-
-  FilterScreen() {
-    hourManager = HourManager();
-    _allUsers = hourManager.listTennisHours;
-  }
-
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
@@ -24,8 +17,8 @@ class _FilterScreenState extends State<FilterScreen> {
   @override
   initState() {
     // at the beginning, all users are shown
-    widget._allUsers = widget.hourManager.listTennisHours;
-    _foundUsers = widget._allUsers;
+    _foundUsers =
+        Provider.of<HourModel>(context, listen: false).listTennisHours;
     super.initState();
   }
 
@@ -34,9 +27,10 @@ class _FilterScreenState extends State<FilterScreen> {
     List<TennisHour> results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = widget._allUsers;
+      results = Provider.of<HourModel>(context, listen: false).listTennisHours;
     } else {
-      results = widget._allUsers
+      results = Provider.of<HourModel>(context, listen: false)
+          .listTennisHours
           .where((user) => user
               .getAllChars()
               .toLowerCase()
@@ -92,15 +86,7 @@ class _FilterScreenState extends State<FilterScreen> {
     );
   }
 
-  void deleteHour(TennisHour hour) {
-    setState(() {
-      widget.hourManager.deleteHour(hour);
-    });
-  }
+  void deleteHour(TennisHour hour) {}
 
-  void editHour(TennisHour hour) {
-    setState(() {
-      print('edit Hour');
-    });
-  }
+  void editHour(TennisHour hour) {}
 }

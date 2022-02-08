@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:provider/provider.dart';
 import 'package:tennis_cash_court/model/database_model.dart';
+import 'package:tennis_cash_court/model/hour_model.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
-import '../../model/hour_manager.dart';
-import '../../model/share_preferences.dart';
+import '../../model/preferences_model.dart';
 
 class SyncScreen extends StatefulWidget {
-  late HourManager hourManager;
   late DatabaseModel databaseModel;
 
   SyncScreen() {
-    hourManager = HourManager();
     databaseModel = DatabaseModel();
   }
 
@@ -22,7 +21,8 @@ class _SyncScreenState extends State<SyncScreen> {
   final databaseReference = FirebaseDatabase.instance.ref();
 
   void updateDataToServerFirebase() {
-    widget.databaseModel.setTennisHoursList(widget.hourManager.listTennisHours);
+    widget.databaseModel.setTennisHoursList(
+        Provider.of<HourModel>(context, listen: false).listTennisHours);
   }
 
   void viewDataFirebase() {
@@ -36,7 +36,7 @@ class _SyncScreenState extends State<SyncScreen> {
     List<TennisHour> tennisHourList =
         widget.databaseModel.getTennisHourListFromDatabase();
     tennisHourList.map((e) => print(e.toMap())).toList();
-    widget.hourManager.updateDatas(tennisHourList);
+    Provider.of<HourModel>(context, listen: false).updateDatas(tennisHourList);
   }
 
   void deleteDataFirebase() {
@@ -54,8 +54,7 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   void saveDataPreferences() {
-    PreferencesModel preferencesModel = PreferencesModel();
-    preferencesModel.saveDataToPreferences();
+    print('save data to preferences => nothing');
   }
 
   @override

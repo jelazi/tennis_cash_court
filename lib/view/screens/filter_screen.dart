@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../model/hour_manager.dart';
-import '../listview_cards_hours.dart';
+import '../cards/listview_cards_hours.dart';
 import '../../model/tennis_hour.dart';
-import '../sum_card.dart';
+import '../cards/sum_card.dart';
 
 class FilterScreen extends StatefulWidget {
   List<TennisHour> _allUsers = [];

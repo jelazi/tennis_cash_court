@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'screens/filter_screen.dart';
-import 'screens/Pay_screen.dart';
-import 'screens/sync_screen.dart';
+import '../screens/filter_screen.dart';
+import '../screens/Pay_screen.dart';
+import '../screens/sync_screen.dart';
 
-import 'screens/settings_screen.dart';
-import 'screens/main_sreen.dart';
-import './custom_navbar_widget.dart';
+import '../screens/settings_screen.dart';
+import '../screens/main_sreen.dart';
+import 'custom_navbar_widget.dart';
 
 class CustomWidget extends StatefulWidget {
   final BuildContext menuScreenContext;

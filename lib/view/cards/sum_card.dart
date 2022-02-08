@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_cash_court/model/hour_manager.dart';
-import './add_new_hour_dialog.dart';
+import 'new_hour/add_new_hour_dialog.dart';
 import '../model/tennis_hour.dart';
 
 class SumCard extends StatefulWidget {

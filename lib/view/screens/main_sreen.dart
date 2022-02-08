@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
 
-import '../view/sum_card.dart';
-import '../view/listview_cards_hours.dart';
-import '../model/hour_manager.dart';
+import '../sum_card.dart';
+import '../listview_cards_hours.dart';
+import '../../model/hour_manager.dart';
 
 class MainScreen extends StatefulWidget {
   late HourManager hourManager;

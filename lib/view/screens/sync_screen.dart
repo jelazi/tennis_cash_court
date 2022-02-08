@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:tennis_cash_court/model/database_model.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
-import '../model/hour_manager.dart';
-import '../model/share_preferences.dart';
+import '../../model/hour_manager.dart';
+import '../../model/share_preferences.dart';
 
 class SyncScreen extends StatefulWidget {
   late HourManager hourManager;

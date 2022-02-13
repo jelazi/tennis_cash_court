@@ -16,7 +16,7 @@ class PreferencesModel {
   }
 
   void deleteDataPreferences() async {
-    print('delte data');
+    print('delete data');
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove('listHours');
   }

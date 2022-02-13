@@ -4,6 +4,7 @@ import 'package:tennis_cash_court/model/tennis_hour.dart';
 
 class HourModel extends ChangeNotifier {
   List<TennisHour> _listTennisHours = [];
+  List<TennisHour> _listTennisHourUnpaid = [];
   String currency = 'Kč';
   double priceForHour = 100;
 
@@ -11,12 +12,15 @@ class HourModel extends ChangeNotifier {
     return _listTennisHours;
   }
 
-  List<TennisHour> getListTennisHoursUnPaid() {
-    List<TennisHour> list = [];
+  List<TennisHour> get listTennisHourUnpaid {
+    return _listTennisHourUnpaid;
+  }
+
+  _updateListTennisHoursUnPaid() {
+    _listTennisHourUnpaid = [];
     _listTennisHours.map((hour) {
-      if (!hour.isPayd) list.add(hour);
+      if (!hour.isPayd) _listTennisHourUnpaid.add(hour);
     }).toString();
-    return list;
   }
 
   List<Map<String, dynamic>> getListMapTennisHour() {
@@ -26,10 +30,11 @@ class HourModel extends ChangeNotifier {
   }
 
   void payAll() {
-    for (int i = 0; i < _listTennisHours.length; i++) {
+    for (var i = 0; i < _listTennisHours.length; i++) {
       _listTennisHours[i].isPayd = true;
     }
     _setData(listTennisHours);
+    _updateListTennisHoursUnPaid();
     notifyListeners();
   }
 
@@ -43,16 +48,13 @@ class HourModel extends ChangeNotifier {
     return sum;
   }
 
-  bool containsUnpaid() {
-    _listTennisHours.map((e) {
-      if (!e.isPayd) return true;
-    }).toList();
-    return false;
+  bool get _containsUnpaid {
+    return _listTennisHourUnpaid.isNotEmpty;
   }
 
   List<DateTime> getFirstLastDateUnpaid() {
     List<DateTime> list = [];
-    if (listTennisHours.isEmpty || !containsUnpaid()) return list;
+    if (listTennisHours.isEmpty || !_containsUnpaid) return list;
     DateTime first = listTennisHours.first.date;
     DateTime last = listTennisHours.first.date;
     listTennisHours.map((e) {
@@ -88,12 +90,15 @@ class HourModel extends ChangeNotifier {
     preferencesModel
         .getDataFromPreferences()
         .then((value) => _listTennisHours = value);
+    _updateListTennisHoursUnPaid();
     notifyListeners();
   }
 
   void addNewHour(TennisHour tennisHour) {
     _listTennisHours.add(tennisHour);
     _setData(listTennisHours);
+    _updateListTennisHoursUnPaid();
+    notifyListeners();
   }
 
   void _setData(List<TennisHour> listTennisHours) async {
@@ -109,11 +114,14 @@ class HourModel extends ChangeNotifier {
       }
       if (!isUpdate) _listTennisHours.add(hour);
     }
+    _updateListTennisHoursUnPaid();
+    notifyListeners();
   }
 
   void deleteHour(TennisHour hourForDelete) {
     _listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
     _setData(listTennisHours);
+    _updateListTennisHoursUnPaid();
     notifyListeners();
   }
 }

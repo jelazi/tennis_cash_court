@@ -39,7 +39,7 @@ class _MainScreenState extends State<MainScreen> {
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height - 200,
                 child: ListViewCardsHours(
-                  model.getListTennisHoursUnPaid(),
+                  model.listTennisHourUnpaid,
                   deleteHour,
                   editHour,
                   isEditable,
@@ -60,22 +60,19 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void deleteHour(TennisHour hour) {
-    setState(() {
-      Provider.of<HourModel>(context, listen: false).deleteHour(hour);
-    });
+    Provider.of<HourModel>(context, listen: false).deleteHour(hour);
   }
 
   void editHour(TennisHour hour) {
-    setState(() {
-      print('edit Hour');
-    });
+    print('edit Hour');
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => setState(() {
-          Provider.of<HourModel>(context, listen: false).loadData();
-        }));
+
+    WidgetsBinding.instance!.addPostFrameCallback(
+        (_) => Provider.of<HourModel>(context, listen: false).loadData());
+    setState(() {});
   }
 }

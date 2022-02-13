@@ -20,7 +20,7 @@ class _PayScreenState extends State<PayScreen> {
       return Scaffold(
         body: Stack(
           children: [
-            model.containsUnpaid()
+            model.listTennisHourUnpaid.isNotEmpty
                 ? Positioned(
                     bottom: 100,
                     child: SizedBox(
@@ -85,12 +85,51 @@ class _PayScreenState extends State<PayScreen> {
           ],
         ),
         floatingActionButton: FloatingActionButton.extended(
-          onPressed: () =>
-              Provider.of<HourModel>(context, listen: false).payAll(),
+          onPressed: () => payTennisHour(),
           icon: Icon(Icons.payments),
           label: Text("Payment all hours"),
         ),
       );
     });
+  }
+
+  payTennisHour() {
+    print('here');
+    var sum = Provider.of<HourModel>(context, listen: false)
+        .totalPrice
+        .toStringAsFixed(0);
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.pop(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Ok"),
+      onPressed: () {
+        Provider.of<HourModel>(context, listen: false).payAll();
+        Navigator.pop(context);
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Pay tennis hours"),
+      content: Text("Do you want pay all hours? Price is $sum."),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+    print('hie');
   }
 }

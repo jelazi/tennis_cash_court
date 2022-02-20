@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:tennis_cash_court/model/hour_model.dart';
+import 'package:get/get.dart';
+import '../../model/hour_model.dart';
 import '../cards/listview_cards_hours.dart';
 import '../../model/tennis_hour.dart';
 import '../cards/sum_card.dart';
@@ -11,31 +11,30 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
+  final HourController hourController = Get.find();
   bool editable = false;
 
-  List<TennisHour> _foundUsers = [];
+  RxList<dynamic> _foundUsers = [].obs;
   @override
   initState() {
     // at the beginning, all users are shown
-    _foundUsers =
-        Provider.of<HourModel>(context, listen: false).listTennisHours;
+    _foundUsers = hourController.listTennisHours;
     super.initState();
   }
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
-    List<TennisHour> results = [];
+    RxList<dynamic> results = [].obs;
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
-      results = Provider.of<HourModel>(context, listen: false).listTennisHours;
+      results = hourController.listTennisHours;
     } else {
-      results = Provider.of<HourModel>(context, listen: false)
-          .listTennisHours
+      results = hourController.listTennisHours
           .where((user) => user
               .getAllChars()
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
-          .toList();
+          .toList() as RxList;
       // we use the toLowerCase() method to make it case-insensitive
     }
 

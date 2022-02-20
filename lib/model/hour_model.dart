@@ -1,23 +1,25 @@
-import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/preferences_model.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
+import 'preferences_model.dart';
+import 'tennis_hour.dart';
+import 'package:get/get.dart';
 
-class HourModel extends ChangeNotifier {
-  List<TennisHour> _listTennisHours = [];
-  List<TennisHour> _listTennisHourUnpaid = [];
-  String currency = 'Kč';
+class HourController extends GetxController with StateMixin {
+  HourController() {}
+
+  RxList<dynamic> _listTennisHours = [].obs;
+  RxList<dynamic> _listTennisHourUnpaid = [].obs;
+  final String currency = 'Kč';
   double priceForHour = 100;
 
-  List<TennisHour> get listTennisHours {
+  RxList<dynamic> get listTennisHours {
     return _listTennisHours;
   }
 
-  List<TennisHour> get listTennisHourUnpaid {
+  RxList<dynamic> get listTennisHourUnpaid {
     return _listTennisHourUnpaid;
   }
 
   _updateListTennisHoursUnPaid() {
-    _listTennisHourUnpaid = [];
+    _listTennisHourUnpaid = [].obs;
     _listTennisHours.map((hour) {
       if (!hour.isPayd) _listTennisHourUnpaid.add(hour);
     }).toString();
@@ -35,15 +37,15 @@ class HourModel extends ChangeNotifier {
     }
     _setData(listTennisHours);
     _updateListTennisHoursUnPaid();
-    notifyListeners();
   }
 
-  double get totalPrice {
-    double sum = 0;
+  RxDouble get totalPrice {
+    RxDouble sum = RxDouble(0);
     _listTennisHours.map((hour) {
       int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
 
-      if (!hour.isPayd) sum += (hour.hours * (priceForHour / sumPartners));
+      if (!hour.isPayd)
+        sum.value += (hour.hours * (priceForHour / sumPartners));
     }).toList();
     return sum;
   }
@@ -77,31 +79,30 @@ class HourModel extends ChangeNotifier {
     return list;
   }
 
-  double get summaryHours {
-    double sum = 0;
+  RxDouble get summaryHours {
+    RxDouble sum = RxDouble(0);
     _listTennisHours
-        .map((hour) => {if (!hour.isPayd) sum += hour.hours})
+        .map((hour) => {if (!hour.isPayd) sum.value += hour.hours})
         .toList();
     return sum;
   }
 
-  void loadData() async {
+  Future loadData() async {
     PreferencesModel preferencesModel = PreferencesModel();
-    preferencesModel
+    await preferencesModel
         .getDataFromPreferences()
-        .then((value) => _listTennisHours = value);
+        .then((value) => _listTennisHours = value)
+        .then((_) => null);
     _updateListTennisHoursUnPaid();
-    notifyListeners();
   }
 
   void addNewHour(TennisHour tennisHour) {
     _listTennisHours.add(tennisHour);
     _setData(listTennisHours);
     _updateListTennisHoursUnPaid();
-    notifyListeners();
   }
 
-  void _setData(List<TennisHour> listTennisHours) async {
+  void _setData(RxList<dynamic> listTennisHours) async {
     PreferencesModel preferencesModel = PreferencesModel();
     preferencesModel.saveDataToPreferences(listTennisHours);
   }
@@ -115,13 +116,13 @@ class HourModel extends ChangeNotifier {
       if (!isUpdate) _listTennisHours.add(hour);
     }
     _updateListTennisHoursUnPaid();
-    notifyListeners();
+    //   notifyListeners();
   }
 
   void deleteHour(TennisHour hourForDelete) {
     _listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
     _setData(listTennisHours);
     _updateListTennisHoursUnPaid();
-    notifyListeners();
+    //  notifyListeners();
   }
 }

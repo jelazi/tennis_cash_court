@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:provider/provider.dart';
-import 'package:tennis_cash_court/model/hour_model.dart';
-import 'package:tennis_cash_court/view/new_hour/partner_dropdown_button.dart';
+import '../../model/hour_model.dart';
+import 'partner_dropdown_button.dart';
 import '../../model/tennis_hour.dart';
 import 'calendar_text.dart';
 
 class AddNewHourDialog extends StatefulWidget {
   Function addNewHour;
+  final HourController hourController = Get.find();
 
   late List<String> possiblePartnerCardsNames;
 
   AddNewHourDialog(this.addNewHour, BuildContext context,
       Animation<double> animation, Animation<double> secondaryAnimation) {
-    possiblePartnerCardsNames =
-        Provider.of<HourModel>(context, listen: false).getListCurrentPartners();
+    possiblePartnerCardsNames = hourController.getListCurrentPartners();
   }
 
   @override

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:provider/provider.dart';
-import 'package:tennis_cash_court/model/database_model.dart';
-import 'package:tennis_cash_court/model/hour_model.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
+import 'package:get/get.dart';
+
+import '../../model/database_model.dart';
+import '../../model/hour_model.dart';
+import '../../model/tennis_hour.dart';
 import '../../model/preferences_model.dart';
 
 class SyncScreen extends StatefulWidget {
@@ -18,11 +19,11 @@ class SyncScreen extends StatefulWidget {
 }
 
 class _SyncScreenState extends State<SyncScreen> {
+  final HourController hourController = Get.find();
   final databaseReference = FirebaseDatabase.instance.ref();
 
   void updateDataToServerFirebase() {
-    widget.databaseModel.setTennisHoursList(
-        Provider.of<HourModel>(context, listen: false).listTennisHours);
+    // widget.databaseModel.setTennisHoursList(hourController.listTennisHours);
   }
 
   void viewDataFirebase() {
@@ -36,7 +37,7 @@ class _SyncScreenState extends State<SyncScreen> {
     List<TennisHour> tennisHourList =
         widget.databaseModel.getTennisHourListFromDatabase();
     tennisHourList.map((e) => print(e.toMap())).toList();
-    Provider.of<HourModel>(context, listen: false).updateDatas(tennisHourList);
+    hourController.updateDatas(tennisHourList);
   }
 
   void deleteDataFirebase() {

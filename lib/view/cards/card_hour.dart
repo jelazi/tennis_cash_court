@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tennis_cash_court/model/hour_controller.dart';
 import '../../model/tennis_hour.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class CardHour extends StatefulWidget {
-  final void Function(TennisHour tennisHour) deleteHour;
-  final void Function(TennisHour tennisHour) editHour;
   bool isEditable;
 
-  CardHour(this.tennisHour, this.deleteHour, this.editHour, this.isEditable);
+  CardHour(this.tennisHour, this.isEditable);
   TennisHour tennisHour;
 
   @override
@@ -16,12 +16,11 @@ class CardHour extends StatefulWidget {
 }
 
 class _CardHourState extends State<CardHour> {
-  void edit(BuildContext context) {
-    widget.editHour(widget.tennisHour);
-  }
+  HourController hourController = Get.find();
+  edit(BuildContext context) {}
 
-  void delete(BuildContext context) {
-    widget.deleteHour(widget.tennisHour);
+  delete(BuildContext context) {
+    hourController.deleteHour(widget.tennisHour);
   }
 
   @override

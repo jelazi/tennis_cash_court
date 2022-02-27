@@ -44,6 +44,7 @@ dependencies:
   flutter_slidable: ^1.2.0
   get: ^4.6.1
   get_storage: ^2.0.3
+  logger: ^1.1.0
 
 dev_dependencies:
   flutter_test:

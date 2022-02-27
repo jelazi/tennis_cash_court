@@ -93,8 +93,6 @@ class _SumCardState extends State<SumCard> {
   }
 
   void addNewHour(TennisHour tennisHour) {
-    widget.setState(() {
-      hourController.addNewHour(tennisHour);
-    });
+    hourController.addNewHour(tennisHour);
   }
 }

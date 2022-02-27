@@ -7,11 +7,11 @@ class StorageModel {
   final box = GetStorage();
   StorageModel();
 
-  void saveDataToStorage(RxList<dynamic> listTennisHours) async {
+  void saveDataToStorage(List listTennisHours) async {
     await box.write('listHours', _encodeToJson(listTennisHours));
   }
 
-  Future<RxList<dynamic>> getDataFromStorage() async {
+  Future<List> getDataFromStorage() async {
     return _decodeFromJson(box.read('listHours') ?? '');
   }
 
@@ -20,14 +20,14 @@ class StorageModel {
     await box.remove('listHours');
   }
 
-  RxList<dynamic> _decodeFromJson(String hours) {
+  List _decodeFromJson(String hours) {
     if (hours.isEmpty) return [].obs;
-    return RxList((json.decode(hours))
+    return (json.decode(hours))
         .map<TennisHour>((item) => TennisHour.fromMap(item))
-        .toList());
+        .toList();
   }
 
-  String _encodeToJson(RxList<dynamic> list) => json.encode(
+  String _encodeToJson(List list) => json.encode(
         list.map<Map<String, dynamic>>((hour) => hour.toMap()).toList(),
       );
 }

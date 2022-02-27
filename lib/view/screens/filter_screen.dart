@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../model/hour_controller.dart';
-import '../cards/listview_cards_hours.dart';
 import '../../model/tennis_hour.dart';
+import '../cards/card_hour.dart';
 import '../cards/sum_card.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -14,7 +14,7 @@ class _FilterScreenState extends State<FilterScreen> {
   final HourController hourController = Get.find();
   bool editable = false;
 
-  RxList<dynamic> _foundUsers = [].obs;
+  List _foundUsers = [];
   @override
   initState() {
     // at the beginning, all users are shown
@@ -24,12 +24,12 @@ class _FilterScreenState extends State<FilterScreen> {
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
-    RxList<dynamic> results = [].obs;
+    List results = [];
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       results = hourController.listTennisHours;
     } else {
-      results.value = hourController.listTennisHours
+      results = hourController.listTennisHours
           .where((user) => user
               .getAllChars()
               .toLowerCase()
@@ -68,8 +68,17 @@ class _FilterScreenState extends State<FilterScreen> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height - 200,
-                child: ListViewCardsHours(
-                    _foundUsers, deleteHour, editHour, editable),
+                child: Obx(() => ListView(
+                      shrinkWrap: true,
+                      children: hourController.listTennisHourUnpaid
+                          .map((element) => InkWell(
+                                child: CardHour(
+                                  element,
+                                  editable,
+                                ),
+                              ))
+                          .toList(),
+                    )),
               ),
             ),
             Positioned(

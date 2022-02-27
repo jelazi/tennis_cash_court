@@ -1,4 +1,4 @@
-import 'preferences_model.dart';
+import 'storage_model.dart';
 import 'tennis_hour.dart';
 import 'package:get/get.dart';
 
@@ -88,9 +88,9 @@ class HourController extends GetxController with StateMixin {
   }
 
   Future loadData() async {
-    PreferencesModel preferencesModel = PreferencesModel();
+    StorageModel preferencesModel = StorageModel();
     await preferencesModel
-        .getDataFromPreferences()
+        .getDataFromStorage()
         .then((value) => _listTennisHours = value)
         .then((_) => null);
     _updateListTennisHoursUnPaid();
@@ -103,8 +103,8 @@ class HourController extends GetxController with StateMixin {
   }
 
   void _setData(RxList<dynamic> listTennisHours) async {
-    PreferencesModel preferencesModel = PreferencesModel();
-    preferencesModel.saveDataToPreferences(listTennisHours);
+    StorageModel preferencesModel = StorageModel();
+    preferencesModel.saveDataToStorage(listTennisHours);
   }
 
   void updateDatas(List<TennisHour> data) {

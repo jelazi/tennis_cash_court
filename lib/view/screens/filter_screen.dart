@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../model/hour_model.dart';
+import '../../model/hour_controller.dart';
 import '../cards/listview_cards_hours.dart';
 import '../../model/tennis_hour.dart';
 import '../cards/sum_card.dart';
@@ -29,12 +29,12 @@ class _FilterScreenState extends State<FilterScreen> {
       // if the search field is empty or only contains white-space, we'll display all users
       results = hourController.listTennisHours;
     } else {
-      results = hourController.listTennisHours
+      results.value = hourController.listTennisHours
           .where((user) => user
               .getAllChars()
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
-          .toList() as RxList;
+          .toList();
       // we use the toLowerCase() method to make it case-insensitive
     }
 

@@ -3,9 +3,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 
 import '../../model/database_model.dart';
-import '../../model/hour_model.dart';
+import '../../model/hour_controller.dart';
 import '../../model/tennis_hour.dart';
-import '../../model/preferences_model.dart';
+import '../../model/storage_model.dart';
 
 class SyncScreen extends StatefulWidget {
   late DatabaseModel databaseModel;
@@ -45,12 +45,12 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   void getDataFromPreferences() {
-    PreferencesModel preferencesModel = PreferencesModel();
-    preferencesModel.getDataFromPreferences();
+    StorageModel preferencesModel = StorageModel();
+    preferencesModel.getDataFromStorage();
   }
 
   void deleteDataPreferences() {
-    PreferencesModel preferencesModel = PreferencesModel();
+    StorageModel preferencesModel = StorageModel();
     preferencesModel.deleteDataPreferences();
   }
 

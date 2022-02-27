@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import '../../model/hour_model.dart';
+import '../../model/hour_controller.dart';
 
 class PayScreen extends StatefulWidget {
   @override

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../model/hour_controller.dart';
 import '../../model/tennis_hour.dart';
 
+import '../cards/card_hour.dart';
 import '../cards/sum_card.dart';
 import '../cards/listview_cards_hours.dart';
 
@@ -38,12 +39,17 @@ class _MainScreenState extends State<MainScreen> {
             SizedBox(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height - 200,
-              child: ListViewCardsHours(
-                hourController.listTennisHourUnpaid,
-                deleteHour,
-                editHour,
-                isEditable,
-              ),
+              child: Obx(() => ListView(
+                    shrinkWrap: true,
+                    children: hourController.listTennisHourUnpaid
+                        .map((element) => InkWell(
+                              child: CardHour(
+                                element,
+                                isEditable,
+                              ),
+                            ))
+                        .toList(),
+                  )),
             ),
             Positioned(
               bottom: 5,
@@ -56,22 +62,5 @@ class _MainScreenState extends State<MainScreen> {
         ),
       ),
     );
-  }
-
-  void deleteHour(TennisHour hour) {
-    hourController.deleteHour(hour);
-  }
-
-  void editHour(TennisHour hour) {
-    print('edit Hour');
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance!
-        .addPostFrameCallback((_) => hourController.loadData());
-    setState(() {});
   }
 }

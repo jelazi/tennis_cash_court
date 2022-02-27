@@ -1,47 +1,39 @@
+import '../constants.dart';
 import 'storage_model.dart';
 import 'tennis_hour.dart';
 import 'package:get/get.dart';
 
-class HourController extends GetxController with StateMixin {
-  HourController() {}
-
-  RxList<dynamic> _listTennisHours = [].obs;
-  RxList<dynamic> _listTennisHourUnpaid = [].obs;
+class HourController extends GetxController {
+  var listTennisHours = [].obs;
   final String currency = 'Kč';
   double priceForHour = 100;
 
-  RxList<dynamic> get listTennisHours {
-    return _listTennisHours;
-  }
-
-  RxList<dynamic> get listTennisHourUnpaid {
-    return _listTennisHourUnpaid;
-  }
-
-  _updateListTennisHoursUnPaid() {
-    _listTennisHourUnpaid = [].obs;
-    _listTennisHours.map((hour) {
-      if (!hour.isPayd) _listTennisHourUnpaid.add(hour);
-    }).toString();
+  RxList get listTennisHourUnpaid {
+    var listTennisHourUnpaid = [].obs;
+    for (var i = 0; i < listTennisHours.length; i++) {
+      if (!listTennisHours[i].isPayd) {
+        listTennisHourUnpaid.add(listTennisHours[i]);
+      }
+    }
+    return listTennisHourUnpaid;
   }
 
   List<Map<String, dynamic>> getListMapTennisHour() {
     List<Map<String, dynamic>> list = [];
-    _listTennisHours.map((e) => list.add(e.toMap())).toList();
+    listTennisHours.map((e) => list.add(e.toMap())).toList();
     return list;
   }
 
   void payAll() {
-    for (var i = 0; i < _listTennisHours.length; i++) {
-      _listTennisHours[i].isPayd = true;
+    for (var i = 0; i < listTennisHours.length; i++) {
+      listTennisHours[i].isPayd = true;
     }
     _setData(listTennisHours);
-    _updateListTennisHoursUnPaid();
   }
 
   RxDouble get totalPrice {
     RxDouble sum = RxDouble(0);
-    _listTennisHours.map((hour) {
+    listTennisHours.map((hour) {
       int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
 
       if (!hour.isPayd)
@@ -51,7 +43,7 @@ class HourController extends GetxController with StateMixin {
   }
 
   bool get _containsUnpaid {
-    return _listTennisHourUnpaid.isNotEmpty;
+    return listTennisHourUnpaid.isNotEmpty;
   }
 
   List<DateTime> getFirstLastDateUnpaid() {
@@ -70,7 +62,7 @@ class HourController extends GetxController with StateMixin {
 
   List<String> getListCurrentPartners() {
     List<String> list = [''];
-    _listTennisHours.map((hour) {
+    listTennisHours.map((hour) {
       hour.partner.map((partner) {
         if (!list.contains(partner)) list.add(partner);
       }).toList();
@@ -81,7 +73,7 @@ class HourController extends GetxController with StateMixin {
 
   RxDouble get summaryHours {
     RxDouble sum = RxDouble(0);
-    _listTennisHours
+    listTennisHours
         .map((hour) => {if (!hour.isPayd) sum.value += hour.hours})
         .toList();
     return sum;
@@ -91,18 +83,17 @@ class HourController extends GetxController with StateMixin {
     StorageModel preferencesModel = StorageModel();
     await preferencesModel
         .getDataFromStorage()
-        .then((value) => _listTennisHours = value)
+        .then((value) => listTennisHours.value = value)
         .then((_) => null);
-    _updateListTennisHoursUnPaid();
   }
 
   void addNewHour(TennisHour tennisHour) {
-    _listTennisHours.add(tennisHour);
+    listTennisHours.add(tennisHour);
+    listTennisHourUnpaid.add(tennisHour);
     _setData(listTennisHours);
-    _updateListTennisHoursUnPaid();
   }
 
-  void _setData(RxList<dynamic> listTennisHours) async {
+  void _setData(List listTennisHours) async {
     StorageModel preferencesModel = StorageModel();
     preferencesModel.saveDataToStorage(listTennisHours);
   }
@@ -110,19 +101,15 @@ class HourController extends GetxController with StateMixin {
   void updateDatas(List<TennisHour> data) {
     for (TennisHour hour in data) {
       bool isUpdate = false;
-      for (TennisHour hourCur in _listTennisHours) {
+      for (TennisHour hourCur in listTennisHours) {
         isUpdate = hourCur.updateDatas(hour);
       }
-      if (!isUpdate) _listTennisHours.add(hour);
+      if (!isUpdate) listTennisHours.add(hour);
     }
-    _updateListTennisHoursUnPaid();
-    //   notifyListeners();
   }
 
   void deleteHour(TennisHour hourForDelete) {
-    _listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
+    listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
     _setData(listTennisHours);
-    _updateListTennisHoursUnPaid();
-    //  notifyListeners();
   }
 }

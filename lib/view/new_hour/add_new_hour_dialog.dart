@@ -73,7 +73,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                   widget.addNewHour(
                     TennisHour(
                         date: dateTime,
-                        hours: double.parse(numberHour.replaceAll(',', '.')),
+                        hours: int.parse(numberHour.replaceAll(',', '.')),
                         partner: currentPartnerCardsNames),
                   );
                   Navigator.pop(context);

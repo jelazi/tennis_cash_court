@@ -70,7 +70,7 @@ class _FilterScreenState extends State<FilterScreen> {
                 height: MediaQuery.of(context).size.height - 200,
                 child: Obx(() => ListView(
                       shrinkWrap: true,
-                      children: hourController.listTennisHourUnpaid
+                      children: hourController.listTennisHours
                           .map((element) => InkWell(
                                 child: CardHour(
                                   element,
@@ -93,8 +93,4 @@ class _FilterScreenState extends State<FilterScreen> {
       ),
     );
   }
-
-  void deleteHour(TennisHour hour) {}
-
-  void editHour(TennisHour hour) {}
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:tennis_cash_court/model/settings.controller.dart';
 import '../../model/hour_controller.dart';
 import '../new_hour/add_new_hour_dialog.dart';
 import '../../model/tennis_hour.dart';
@@ -16,6 +17,7 @@ class SumCard extends StatefulWidget {
 
 class _SumCardState extends State<SumCard> {
   final HourController hourController = Get.find();
+  final SettingsController settingsController = Get.find();
   TextStyle sumStyle = const TextStyle(
     color: Colors.black,
     fontWeight: FontWeight.bold,
@@ -49,7 +51,7 @@ class _SumCardState extends State<SumCard> {
                     'Total price: ' +
                         hourController.totalPrice.value.toStringAsFixed(0) +
                         ' ' +
-                        hourController.currency,
+                        settingsController.currency.value,
                     style: sumStyle,
                   ),
                 )

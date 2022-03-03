@@ -1,12 +1,23 @@
+import 'package:tennis_cash_court/model/settings.controller.dart';
+
 import '../constants.dart';
 import 'storage_model.dart';
 import 'tennis_hour.dart';
 import 'package:get/get.dart';
 
 class HourController extends GetxController {
+  SettingsController settingsController = Get.find();
   var listTennisHours = [].obs;
-  final String currency = 'Kč';
-  double priceForHour = 100;
+  RxBool isListTennisHourUnpaidNotEmpty = RxBool(false);
+
+  RxList<TennisHour> get listTennisHourReal {
+    RxList<TennisHour> list = RxList();
+    for (TennisHour tennisHour in listTennisHours) {
+      list.add(tennisHour);
+    }
+
+    return list;
+  }
 
   RxList get listTennisHourUnpaid {
     var listTennisHourUnpaid = [].obs;
@@ -15,6 +26,7 @@ class HourController extends GetxController {
         listTennisHourUnpaid.add(listTennisHours[i]);
       }
     }
+    isListTennisHourUnpaidNotEmpty.value = listTennisHourUnpaid.isNotEmpty;
     return listTennisHourUnpaid;
   }
 
@@ -29,26 +41,24 @@ class HourController extends GetxController {
       listTennisHours[i].isPayd = true;
     }
     _setData(listTennisHours);
+    isListTennisHourUnpaidNotEmpty.value = false;
   }
 
   RxDouble get totalPrice {
     RxDouble sum = RxDouble(0);
     listTennisHours.map((hour) {
-      int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length;
-
+      int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length + 1;
       if (!hour.isPayd)
-        sum.value += (hour.hours * (priceForHour / sumPartners));
+        sum.value +=
+            (hour.hours * (settingsController.priceForHour / sumPartners));
     }).toList();
     return sum;
   }
 
-  bool get _containsUnpaid {
-    return listTennisHourUnpaid.isNotEmpty;
-  }
-
-  List<DateTime> getFirstLastDateUnpaid() {
-    List<DateTime> list = [];
-    if (listTennisHours.isEmpty || !_containsUnpaid) return list;
+  RxList<DateTime> get firstLastDateUnpaid {
+    RxList<DateTime> list = RxList();
+    if (listTennisHours.isEmpty || !isListTennisHourUnpaidNotEmpty.value)
+      return list;
     DateTime first = listTennisHours.first.date;
     DateTime last = listTennisHours.first.date;
     listTennisHours.map((e) {
@@ -80,8 +90,8 @@ class HourController extends GetxController {
   }
 
   Future loadData() async {
-    StorageModel preferencesModel = StorageModel();
-    await preferencesModel
+    StorageModel storrageModel = StorageModel();
+    await storrageModel
         .getDataFromStorage()
         .then((value) => listTennisHours.value = value)
         .then((_) => null);
@@ -91,6 +101,7 @@ class HourController extends GetxController {
     listTennisHours.add(tennisHour);
     listTennisHourUnpaid.add(tennisHour);
     _setData(listTennisHours);
+    isListTennisHourUnpaidNotEmpty.value = true;
   }
 
   void _setData(List listTennisHours) async {

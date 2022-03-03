@@ -2,7 +2,7 @@ import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
 class TennisHour {
-  late double hours;
+  late int hours;
   late DateTime date;
   List partner = [];
   bool _isPayd = false;

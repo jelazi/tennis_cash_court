@@ -23,38 +23,53 @@ class _SyncScreenState extends State<SyncScreen> {
   final databaseReference = FirebaseDatabase.instance.ref();
 
   void updateDataToServerFirebase() {
-    // widget.databaseModel.setTennisHoursList(hourController.listTennisHours);
+    widget.databaseModel.setTennisHoursList(hourController.listTennisHourReal);
   }
 
-  void viewDataFirebase() {
+  void viewDataFirebase() async {
     List<TennisHour> tennisHourList =
-        widget.databaseModel.getTennisHourListFromDatabase();
+        await widget.databaseModel.getTennisHourListFromDatabase();
     tennisHourList.map((e) => print(e.toMap())).toList();
   }
 
-  void updateDataFromServerFirebase() {
-    print('from server');
-    List<TennisHour> tennisHourList =
-        widget.databaseModel.getTennisHourListFromDatabase();
-    tennisHourList.map((e) => print(e.toMap())).toList();
-    hourController.updateDatas(tennisHourList);
+  void updateDataFromServerFirebase() async {
+    await widget.databaseModel.getTennisHourListFromDatabase().then((value) {
+      hourController.updateDatas(value);
+    });
   }
 
   void deleteDataFirebase() {
     widget.databaseModel.deleteAllData();
   }
 
-  void getDataFromPreferences() {
+  void getData() {
     StorageModel preferencesModel = StorageModel();
     preferencesModel.getDataFromStorage();
   }
 
-  void deleteDataPreferences() {
-    StorageModel preferencesModel = StorageModel();
-    preferencesModel.deleteDataPreferences();
+  void deleteData() {
+    Get.dialog(AlertDialog(
+      title: Text("Delete"),
+      content: Text("Do you want delete all data"),
+      actions: [
+        TextButton(
+          child: Text("Ok"),
+          onPressed: () {
+            hourController.listTennisHours.clear();
+            Navigator.of(Get.overlayContext!).pop();
+          },
+        ),
+        TextButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(Get.overlayContext!).pop();
+          },
+        ),
+      ],
+    ));
   }
 
-  void saveDataPreferences() {
+  void saveData() {
     print('save data to preferences => nothing');
   }
 
@@ -89,7 +104,7 @@ class _SyncScreenState extends State<SyncScreen> {
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: () => viewDataFirebase(),
-                child: Text("View Data"),
+                child: Text("View Data Firebase"),
               ),
             ),
           ),
@@ -99,7 +114,7 @@ class _SyncScreenState extends State<SyncScreen> {
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
                 onPressed: deleteDataFirebase,
-                child: Text("Delete data"),
+                child: Text("Delete data Firabese"),
               ),
             ),
           ),
@@ -108,8 +123,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: getDataFromPreferences,
-                child: Text("get data from preferences"),
+                onPressed: getData,
+                child: Text("get data"),
               ),
             ),
           ),
@@ -118,8 +133,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: saveDataPreferences,
-                child: Text("save data preferences"),
+                onPressed: saveData,
+                child: Text("save data"),
               ),
             ),
           ),
@@ -128,8 +143,8 @@ class _SyncScreenState extends State<SyncScreen> {
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: ElevatedButton(
-                onPressed: deleteDataPreferences,
-                child: Text("deletedata from preferences"),
+                onPressed: deleteData,
+                child: Text("delete data"),
               ),
             ),
           ),

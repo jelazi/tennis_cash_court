@@ -1,8 +1,10 @@
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
+import '../constants.dart';
+
 class TennisHour {
-  late int hours;
+  late double hours;
   late DateTime date;
   List partner = [];
   bool _isPayd = false;
@@ -14,11 +16,20 @@ class TennisHour {
   }
 
   TennisHour.fromMap(Map map) {
-    date = (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
-    hours = (map['hours'] != null) ? map['hours'] : 0;
-    partner = (map['partner'] != null) ? map['partner'] : [];
-    _isPayd = map['isSold'] == 'true' ? true : false;
-    id = map['id'] ?? '';
+    try {
+      date =
+          (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
+      hours = (map['hours'] != null) ? (map['hours'] as int).toDouble() : 0.0;
+      partner = (map['partner'] != null) ? map['partner'] : [];
+      _isPayd = map['isSold'] == 'true' ? true : false;
+      id = map['id'] ?? '';
+    } catch (e) {
+      logger.e(e);
+      date = DateTime.now();
+      hours = 2.0;
+      var uuidGener = Uuid();
+      id = uuidGener.v1();
+    }
   }
 
   bool get isPayd {

@@ -2,6 +2,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import './tennis_hour.dart';
 import '../constants.dart';
+import 'player_controller.dart';
 
 class DatabaseModel {
   static final DatabaseModel _databaseModel = DatabaseModel._internal();
@@ -10,7 +11,8 @@ class DatabaseModel {
     return _databaseModel;
   }
 
-  final databaseReference = FirebaseDatabase.instance.ref('user1');
+  final databaseHours = FirebaseDatabase.instance.ref('hours');
+  final databasePlayers = FirebaseDatabase.instance.ref('players');
 
   DatabaseModel._internal();
 
@@ -21,12 +23,36 @@ class DatabaseModel {
       map['hour' + index.toString()] = data[index].toMap();
     }
 
-    await databaseReference.update(map);
+    await databaseHours.update(map);
+  }
+
+  setListPlayers(List<dynamic> listPlayers) async {
+    Map<String, dynamic> map = {};
+    for (Player player in listPlayers) {
+      map[player.name] = player.toMap();
+    }
+    await databasePlayers.update(map);
+  }
+
+  Future<List<dynamic>> getListPLayers() async {
+    List<Player> listPlayers = [];
+    await databasePlayers.once().then((event) {
+      final dataSnapshot = event.snapshot;
+      Map<dynamic, dynamic>? map = dataSnapshot.value as Map?;
+      if (map == null) return listPlayers;
+      List listDatas = map.values.toList();
+      for (Map listData in listDatas) {
+        Player player = Player.fromMap(listData);
+        listPlayers.add(player);
+      }
+      return listPlayers;
+    });
+    return listPlayers;
   }
 
   Future<List<TennisHour>> getTennisHourListFromDatabase() async {
     List<TennisHour> tennisHour = [];
-    await databaseReference.once().then((event) {
+    await databaseHours.once().then((event) {
       final dataSnapshot = event.snapshot;
 
       Map<dynamic, dynamic>? map = dataSnapshot.value as Map?;
@@ -43,6 +69,6 @@ class DatabaseModel {
   }
 
   void deleteAllData() {
-    databaseReference.remove();
+    databaseHours.remove();
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:tennis_cash_court/model/hour_controller.dart';
+import 'package:tennis_cash_court/model/player_controller.dart';
 import 'package:tennis_cash_court/model/settings.controller.dart';
 import 'view/navbar/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,6 +18,7 @@ main() async {
   );
   final SettingsController settingsController = Get.put(SettingsController());
   final HourController hourController = Get.put(HourController());
+  final PlayerController playerController = Get.put(PlayerController());
 
   await hourController.loadData().then((_) => runApp(MyApp()));
 }

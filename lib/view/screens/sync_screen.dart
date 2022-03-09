@@ -8,11 +8,7 @@ import '../../model/tennis_hour.dart';
 import '../../model/storage_model.dart';
 
 class SyncScreen extends StatefulWidget {
-  late DatabaseModel databaseModel;
-
-  SyncScreen() {
-    databaseModel = DatabaseModel();
-  }
+  DatabaseModel databaseModel = DatabaseModel();
 
   @override
   State<SyncScreen> createState() => _SyncScreenState();

@@ -7,6 +7,7 @@ class TennisHour {
   late double hours;
   late DateTime date;
   List partner = [];
+  List<String> playerPayd = [];
   bool _isPayd = false;
   late String id;
 

@@ -25,7 +25,7 @@ main() async {
   final HourController hourController = Get.put(HourController());
   final PlayerController playerController = Get.put(PlayerController());
   final AuthenticationController authenticationController =
-      Get.put(AuthenticationController(FakeAuthenticationService()));
+      Get.put(AuthenticationController(MyAuthenticationService()));
 
   await hourController.loadData().then((_) => runApp(MyApp()));
 }

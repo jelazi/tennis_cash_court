@@ -1,3 +1,7 @@
+import 'package:tennis_cash_court/controllers/player_controller.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import 'package:tennis_cash_court/model/database_model.dart';
+
 import '../../model/player.dart';
 import 'package:get/get.dart';
 
@@ -7,20 +11,16 @@ abstract class AuthenticationService extends GetxService {
   Future<void> signOut();
 }
 
-class FakeAuthenticationService extends AuthenticationService {
+class MyAuthenticationService extends AuthenticationService {
+  PlayerController _playerController = Get.find();
   @override
   Future<Player?> getCurrentUser() async {
-    // simulated delay
-    await Future.delayed(Duration(seconds: 2));
-    return null;
+    return _playerController.currentPlayer;
   }
 
   @override
-  Future<Player> signInWithNameAndPassword(
-      String email, String password) async {
-    await Future.delayed(Duration(seconds: 2));
-
-    if (email.toLowerCase() != 'test' || password != 'test') {
+  Future<Player> signInWithNameAndPassword(String name, String password) async {
+    if (name != 'test' || password != 'test') {
       throw AuthenticationException(message: 'Wrong username or password');
     }
 

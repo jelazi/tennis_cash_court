@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
-import '../../model/settings.controller.dart';
+import '../../controllers/settings.controller.dart';
 
 class SettingsScreen extends StatefulWidget {
   SettingsController settingsController = Get.find();

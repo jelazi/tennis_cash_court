@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:tennis_cash_court/model/settings.controller.dart';
-import '../../model/hour_controller.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import '../../controllers/hour_controller.dart';
 import '../new_hour/add_new_hour_dialog.dart';
 import '../../model/tennis_hour.dart';
 

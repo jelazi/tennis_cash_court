@@ -3,7 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_picker/flutter_picker.dart';
-import '../../model/hour_controller.dart';
+import '../../controllers/hour_controller.dart';
 import 'partner_dropdown_button.dart';
 import '../../model/tennis_hour.dart';
 import 'calendar_text.dart';

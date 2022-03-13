@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:tennis_cash_court/model/hour_controller.dart';
-import 'package:tennis_cash_court/model/player_controller.dart';
-import 'package:tennis_cash_court/model/settings.controller.dart';
+import 'package:tennis_cash_court/controllers/authentication/authentication_controller.dart';
+import 'package:tennis_cash_court/controllers/authentication/authentication_service.dart';
+import 'package:tennis_cash_court/controllers/hour_controller.dart';
+import 'package:tennis_cash_court/controllers/player_controller.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import 'controllers/authentication/authentication_state.dart';
+import 'controllers/authentication/login/login_page.dart';
+import 'controllers/authentication/splash_screen.dart';
 import 'view/navbar/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -19,6 +24,8 @@ main() async {
   final SettingsController settingsController = Get.put(SettingsController());
   final HourController hourController = Get.put(HourController());
   final PlayerController playerController = Get.put(PlayerController());
+  final AuthenticationController authenticationController =
+      Get.put(AuthenticationController(FakeAuthenticationService()));
 
   await hourController.loadData().then((_) => runApp(MyApp()));
 }
@@ -28,12 +35,22 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationController authenticationController = Get.find();
     return GetMaterialApp(
       title: 'Tennis cash counter',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: CustomWidget(context),
+      home: Obx(() {
+        if (authenticationController.state is UnAuthenticated) {
+          return LoginPage();
+        }
+
+        if (authenticationController.state is Authenticated) {
+          return CustomWidget(context);
+        }
+        return SplashScreen();
+      }),
     );
   }
 }

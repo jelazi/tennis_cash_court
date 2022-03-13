@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../model/hour_controller.dart';
+import '../../controllers/hour_controller.dart';
 
 class PayDialog extends StatelessWidget {
   HourController hourController = Get.find();

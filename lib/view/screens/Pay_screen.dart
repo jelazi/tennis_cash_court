@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:tennis_cash_court/model/settings.controller.dart';
-import 'package:tennis_cash_court/view/cards/card_hour_short.dart';
-import 'package:tennis_cash_court/view/dialogs/%20pay_dialog.dart';
-import '../../model/hour_controller.dart';
+
+import '../cards/card_hour_short.dart';
+import '../dialogs/pay_dialog.dart';
+import '../../controllers/hour_controller.dart';
+import '../../controllers/settings.controller.dart';
 
 class PayScreen extends StatefulWidget {
   @override

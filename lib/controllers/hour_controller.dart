@@ -1,8 +1,8 @@
-import 'package:tennis_cash_court/model/settings.controller.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
 
 import '../constants.dart';
-import 'storage_model.dart';
-import 'tennis_hour.dart';
+import '../model/storage_model.dart';
+import '../model/tennis_hour.dart';
 import 'package:get/get.dart';
 
 class HourController extends GetxController {

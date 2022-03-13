@@ -2,7 +2,8 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import './tennis_hour.dart';
 import '../constants.dart';
-import 'player_controller.dart';
+import '../controllers/player_controller.dart';
+import 'player.dart';
 
 class DatabaseModel {
   static final DatabaseModel _databaseModel = DatabaseModel._internal();

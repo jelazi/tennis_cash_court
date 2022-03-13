@@ -2,7 +2,6 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import './tennis_hour.dart';
 import '../constants.dart';
-import '../controllers/player_controller.dart';
 import 'player.dart';
 
 class DatabaseModel {
@@ -13,7 +12,7 @@ class DatabaseModel {
   }
 
   final databaseHours = FirebaseDatabase.instance.ref('hours');
-  final databasePlayers = FirebaseDatabase.instance.ref('players');
+  //final databasePlayers = FirebaseDatabase.instance.ref('players');
 
   DatabaseModel._internal();
 
@@ -32,12 +31,12 @@ class DatabaseModel {
     for (Player player in listPlayers) {
       map[player.name] = player.toMap();
     }
-    await databasePlayers.update(map);
+    //   await databasePlayers.update(map);
   }
 
   Future<List<dynamic>> getListPLayers() async {
     List<Player> listPlayers = [];
-    await databasePlayers.once().then((event) {
+    /*   await databasePlayers.once().then((event) {
       final dataSnapshot = event.snapshot;
       Map<dynamic, dynamic>? map = dataSnapshot.value as Map?;
       if (map == null) return listPlayers;
@@ -47,7 +46,7 @@ class DatabaseModel {
         listPlayers.add(player);
       }
       return listPlayers;
-    });
+    });*/
     return listPlayers;
   }
 

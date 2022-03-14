@@ -19,7 +19,12 @@ main() async {
   await GetStorage.init();
 
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyDnLQO1FH7xfqHKCOKvgGelBqsEBlW1v6w',
+      appId: '1:1083771712062:android:e205d61be88813b8cc576f',
+      messagingSenderId: '1083771712062',
+      projectId: 'api-project-1083771712062',
+    ),
   );
   final SettingsController settingsController = Get.put(SettingsController());
   final HourController hourController = Get.put(HourController());

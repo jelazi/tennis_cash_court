@@ -40,7 +40,7 @@ class _SyncScreenState extends State<SyncScreen> {
 
   void getData() {
     StorageModel preferencesModel = StorageModel();
-    preferencesModel.getDataFromStorage();
+    preferencesModel.getTennisHoursFromStorage();
   }
 
   void deleteData() {

@@ -92,7 +92,7 @@ class HourController extends GetxController {
   Future loadData() async {
     StorageModel storrageModel = StorageModel();
     await storrageModel
-        .getDataFromStorage()
+        .getTennisHoursFromStorage()
         .then((value) => listTennisHours.value = value)
         .then((_) => null);
   }
@@ -106,7 +106,7 @@ class HourController extends GetxController {
 
   void _setData(List listTennisHours) async {
     StorageModel preferencesModel = StorageModel();
-    preferencesModel.saveDataToStorage(listTennisHours);
+    preferencesModel.saveTennisHoursToStorage(listTennisHours);
   }
 
   void updateDatas(List<TennisHour> data) {

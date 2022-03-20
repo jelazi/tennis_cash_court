@@ -34,7 +34,7 @@ class DatabaseModel {
     await databasePlayers.update(map);
   }
 
-  Future<List<dynamic>> getListPLayers() async {
+  Future<List<Player>> getListPLayers() async {
     List<Player> listPlayers = [];
     await databasePlayers.once().then((event) {
       final dataSnapshot = event.snapshot;

@@ -1,6 +1,4 @@
-import 'package:tennis_cash_court/controllers/authentication/authentication_controller.dart';
-import 'package:tennis_cash_court/controllers/settings.controller.dart';
-import 'package:tennis_cash_court/model/database_model.dart';
+import '../settings.controller.dart';
 
 import '../../model/player.dart';
 import 'package:get/get.dart';
@@ -24,7 +22,10 @@ class MyAuthenticationService extends AuthenticationService {
       throw AuthenticationException(message: 'Wrong username or password');
     }
     Player currentPlayer = Player(name, password);
-    _settingsController.currentPlayer = Player(name, password);
+    if (_settingsController.isAdmin(name, password)) {
+      currentPlayer = Player.withAdminRights(name, password);
+    }
+    _settingsController.currentPlayer = currentPlayer;
     _settingsController.saveData();
     return currentPlayer;
   }

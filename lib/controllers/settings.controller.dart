@@ -22,6 +22,10 @@ class SettingsController extends GetxController {
     _listPlayers = getDefaultPlayers();
   }
 
+  updateListPlayers(List<Player> players) {
+    _listPlayers = players;
+  }
+
   List<Player> get listPlayers {
     return _listPlayers;
   }
@@ -33,6 +37,15 @@ class SettingsController extends GetxController {
     Player player = Player('player1', 'pass');
     players.add(player);
     return players;
+  }
+
+  bool isAdmin(String name, String pass) {
+    for (Player player in _listPlayers) {
+      if (player.name == name && player.password == pass) {
+        return player.isAdmin;
+      }
+    }
+    return false;
   }
 
   saveData() async {

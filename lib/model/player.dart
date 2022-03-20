@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -12,6 +14,10 @@ class Player {
 
   bool get isAdmin {
     return _isAdmin;
+  }
+
+  set isAdmin(bool isAdmin) {
+    _isAdmin = isAdmin;
   }
 
   Player(this.name, this.password);

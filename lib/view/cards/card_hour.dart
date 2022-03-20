@@ -27,9 +27,9 @@ class _CardHourState extends State<CardHour> {
   Widget build(BuildContext context) {
     if (widget.isEditable) {
       return Slidable(
-        key: ValueKey(0),
+        key: const ValueKey(0),
         startActionPane: ActionPane(
-          motion: ScrollMotion(),
+          motion: const ScrollMotion(),
           children: [
             SlidableAction(
               onPressed: edit,
@@ -62,7 +62,7 @@ class _CardHourState extends State<CardHour> {
 }
 
 class CustomCard extends StatelessWidget {
-  TennisHour tennisHour;
+  final TennisHour tennisHour;
   CustomCard(this.tennisHour);
 
   @override

@@ -12,12 +12,14 @@ class SettingsScreen extends StatefulWidget {
   late String password;
   late int hourPrice;
   late String currency;
+  late bool isAdmin;
 
   SettingsScreen() {
     namePlayer = _settingsController.currentPlayer?.name ?? '';
     password = _settingsController.currentPlayer?.password ?? '';
     hourPrice = _settingsController.priceForHour.value;
     currency = _settingsController.currency.value;
+    isAdmin = _settingsController.currentPlayer?.isAdmin ?? false;
   }
 
   @override
@@ -42,9 +44,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('password'),
+                title: const Text('Password'),
                 leading: const Icon(Icons.password),
                 value: Text(widget.password),
+                onPressed: (BuildContext context) {
+                  Get.dialog(getPassword());
+                },
+              ),
+              SettingsTile.navigation(
+                title: const Text('Is Admin'),
+                leading: const Icon(Icons.admin_panel_settings),
+                value: Text(widget.isAdmin ? 'true' : 'false'),
               ),
             ],
           ),
@@ -71,6 +81,44 @@ class _SettingsScreenState extends State<SettingsScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget getPassword() {
+    return AlertDialog(
+      title: const Text('Password'),
+      content: TextField(
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
+          labelText: widget.password,
+          hintText: 'Enter new password',
+        ),
+        keyboardType: TextInputType.text,
+        onChanged: (text) {
+          setState(() {
+            widget.password = text;
+          });
+        },
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            widget._settingsController.currentPlayer?.password =
+                widget.password;
+            widget._settingsController.saveData();
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: const Text('Ok'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.password =
+                widget._settingsController.currentPlayer?.password ?? '';
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+      ],
     );
   }
 

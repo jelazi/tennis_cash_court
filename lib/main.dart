@@ -27,8 +27,8 @@ main() async {
   );
   final SettingsController _settingsController = Get.put(SettingsController());
   await _settingsController.loadData();
-  final HourController hourController = Get.put(HourController());
-  final AuthenticationController authenticationController =
+  final HourController _hourController = Get.put(HourController());
+  final AuthenticationController _authenticationController =
       Get.put(AuthenticationController(MyAuthenticationService()));
 
   runApp(MyApp());

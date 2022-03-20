@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 import 'package:tennis_cash_court/controllers/settings.controller.dart';
 import 'package:tennis_cash_court/model/database_model.dart';
 
+import '../../constants.dart';
+import '../../model/player.dart';
 import 'authentication_service.dart';
 import 'authentication_state.dart';
 
@@ -34,12 +36,12 @@ class AuthenticationController extends GetxController {
   void _getAuthenticatedUser() async {
     _authenticationStateStream.value = AuthenticationLoading();
 
-    final player = _settingsController.currentPlayer;
+    final Player player = _settingsController.currentPlayer ?? Player('', '');
 
-    if (player == null) {
-      _authenticationStateStream.value = UnAuthenticated();
-    } else {
+    if (_settingsController.isCorrectPlayer(player.name, player.password)) {
       _authenticationStateStream.value = Authenticated(player: player);
+    } else {
+      _authenticationStateStream.value = UnAuthenticated();
     }
   }
 }

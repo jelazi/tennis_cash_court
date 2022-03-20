@@ -3,15 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
 
+import '../../constants.dart';
 import '../../controllers/settings.controller.dart';
 
 class SettingsScreen extends StatefulWidget {
-  SettingsController settingsController = Get.find();
-  late String hourPrice;
+  final SettingsController _settingsController = Get.find();
+  late String namePlayer;
+  late String password;
+  late int hourPrice;
   late String currency;
+
   SettingsScreen() {
-    hourPrice = settingsController.priceForHour.value.toString();
-    currency = settingsController.currency.value;
+    namePlayer = _settingsController.currentPlayer?.name ?? '';
+    password = _settingsController.currentPlayer?.password ?? '';
+    hourPrice = _settingsController.priceForHour.value;
+    currency = _settingsController.currency.value;
   }
 
   @override
@@ -19,20 +25,36 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  bool value = false;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: Text('Common'),
+            title: const Text('Current player'),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                leading: Icon(Icons.price_change),
-                title: Text('Hour price'),
-                value: Text(widget.hourPrice),
+                title: const Text('Name player'),
+                leading: const Icon(Icons.sports_tennis),
+                value: Text(widget.namePlayer),
+                onPressed: (BuildContext context) {
+                  Get.dialog(getDialogName());
+                },
+              ),
+              SettingsTile.navigation(
+                title: const Text('password'),
+                leading: const Icon(Icons.password),
+                value: Text(widget.password),
+              ),
+            ],
+          ),
+          SettingsSection(
+            title: const Text('Common'),
+            tiles: <SettingsTile>[
+              SettingsTile.navigation(
+                leading: const Icon(Icons.price_change),
+                title: const Text('Hour price'),
+                value: Text(widget.hourPrice.toString()),
                 onPressed: (BuildContext context) {
                   Get.dialog(getDialogHourPrice());
                 },
@@ -52,12 +74,49 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget getDialogCurrency() {
+  Widget getDialogName() {
     return AlertDialog(
-      title: Text('Currency'),
+      title: const Text('Name player'),
       content: TextField(
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
+          border: const OutlineInputBorder(),
+          labelText: widget.namePlayer,
+          hintText: 'Enter name player',
+        ),
+        keyboardType: TextInputType.text,
+        onChanged: (text) {
+          setState(() {
+            widget.namePlayer = text;
+          });
+        },
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            widget._settingsController.currentPlayer?.name = widget.namePlayer;
+            widget._settingsController.saveData();
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: const Text('Ok'),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.namePlayer =
+                widget._settingsController.currentPlayer?.name ?? '';
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: const Text('Cancel'),
+        ),
+      ],
+    );
+  }
+
+  Widget getDialogCurrency() {
+    return AlertDialog(
+      title: const Text('Currency'),
+      content: TextField(
+        decoration: InputDecoration(
+          border: const OutlineInputBorder(),
           labelText: widget.currency,
           hintText: 'Enter short currency',
         ),
@@ -71,17 +130,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
       actions: [
         ElevatedButton(
           onPressed: () {
-            widget.settingsController.currency.value = widget.currency;
-            widget.settingsController.saveData();
+            widget._settingsController.currency.value = widget.currency;
+            widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: Text('Ok'),
+          child: const Text('Ok'),
         ),
         ElevatedButton(
           onPressed: () {
+            widget.currency = widget._settingsController.currency.value;
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
       ],
     );
@@ -89,11 +149,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget getDialogHourPrice() {
     return AlertDialog(
-      title: Text('Hour price'),
+      title: const Text('Hour price'),
       content: TextField(
         decoration: InputDecoration(
-          border: OutlineInputBorder(),
-          labelText: widget.hourPrice,
+          border: const OutlineInputBorder(),
+          labelText: widget.hourPrice.toString(),
           hintText: 'Enter new price',
         ),
         inputFormatters: <TextInputFormatter>[
@@ -102,25 +162,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
         keyboardType: TextInputType.number,
         onChanged: (text) {
           setState(() {
-            widget.hourPrice = text;
+            widget.hourPrice = int.parse(text);
           });
         },
       ),
       actions: [
         ElevatedButton(
           onPressed: () {
-            widget.settingsController.priceForHour.value =
-                int.parse(widget.hourPrice);
-            widget.settingsController.saveData();
+            widget._settingsController.priceForHour.value = widget.hourPrice;
+            widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: Text('Ok'),
+          child: const Text('Ok'),
         ),
         ElevatedButton(
           onPressed: () {
+            widget.hourPrice = widget._settingsController.priceForHour.value;
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
         ),
       ],
     );

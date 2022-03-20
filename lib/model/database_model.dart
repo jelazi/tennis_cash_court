@@ -29,7 +29,7 @@ class DatabaseModel {
   setListPlayers(List<dynamic> listPlayers) async {
     Map<String, dynamic> map = {};
     for (Player player in listPlayers) {
-      map[player.name] = player.toMap();
+      map[player.name] = player.toJson();
     }
     await databasePlayers.update(map);
   }
@@ -42,7 +42,7 @@ class DatabaseModel {
       if (map == null) return listPlayers;
       List listDatas = map.values.toList();
       for (Map listData in listDatas) {
-        Player player = Player.fromMap(listData);
+        Player player = Player.fromJson(Map<String, dynamic>.from(listData));
         listPlayers.add(player);
       }
       return listPlayers;

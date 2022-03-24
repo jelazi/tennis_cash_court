@@ -13,6 +13,7 @@ class SettingsScreen extends StatefulWidget {
   late int hourPrice;
   late String currency;
   late bool isAdmin;
+  late RxString language = RxString('');
 
   SettingsScreen() {
     namePlayer = _settingsController.currentPlayer?.name ?? '';
@@ -20,6 +21,7 @@ class SettingsScreen extends StatefulWidget {
     hourPrice = _settingsController.priceForHour.value;
     currency = _settingsController.currency.value;
     isAdmin = _settingsController.currentPlayer?.isAdmin ?? false;
+    language.value = _settingsController.language.value.languageCode;
   }
 
   @override
@@ -33,10 +35,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
       body: SettingsList(
         sections: [
           SettingsSection(
-            title: const Text('Current player'),
+            title: Text('currentPlayer'.tr),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
-                title: const Text('Name player'),
+                title: Text('namePlayer'.tr),
                 leading: const Icon(Icons.sports_tennis),
                 value: Text(widget.namePlayer),
                 onPressed: (BuildContext context) {
@@ -44,7 +46,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Password'),
+                title: Text('password'.tr),
                 leading: const Icon(Icons.password),
                 value: Text(widget.password),
                 onPressed: (BuildContext context) {
@@ -52,18 +54,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile.navigation(
-                title: const Text('Is Admin'),
+                title: Text('isAdmin'.tr),
                 leading: const Icon(Icons.admin_panel_settings),
                 value: Text(widget.isAdmin ? 'true' : 'false'),
               ),
             ],
           ),
           SettingsSection(
-            title: const Text('Common'),
+            title: Text('common'.tr),
             tiles: <SettingsTile>[
               SettingsTile.navigation(
                 leading: const Icon(Icons.price_change),
-                title: const Text('Hour price'),
+                title: Text('hourPrice'.tr),
                 value: Text(widget.hourPrice.toString()),
                 onPressed: (BuildContext context) {
                   Get.dialog(getDialogHourPrice());
@@ -71,10 +73,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
               SettingsTile.navigation(
                 leading: Icon(Icons.money),
-                title: Text('Currency'),
+                title: Text('currency'.tr),
                 value: Text(widget.currency),
                 onPressed: (BuildContext context) {
                   Get.dialog(getDialogCurrency());
+                },
+              ),
+              SettingsTile.navigation(
+                leading: Icon(Icons.language),
+                title: Text('language'.tr),
+                value: Text(widget.language.value),
+                onPressed: (BuildContext context) {
+                  Get.dialog(getLanguage());
                 },
               ),
             ],
@@ -84,14 +94,57 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
+  Widget getLanguage() {
+    List<String> listLanguage = ['cs', 'en'];
+    return AlertDialog(
+      title: Text('language'.tr),
+      content: DropdownButtonFormField<String>(
+        value: widget.language.value,
+        items: listLanguage.map((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+        onChanged: (String? value) {
+          setState(() {
+            if (value != null) {
+              widget.language.value = value;
+            }
+          });
+        },
+      ),
+      actions: [
+        ElevatedButton(
+          onPressed: () {
+            widget._settingsController.language.value =
+                widget._settingsController.getLocale(widget.language.value);
+            widget._settingsController.saveData();
+            Get.updateLocale(widget._settingsController.language.value);
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: Text('ok'.tr),
+        ),
+        ElevatedButton(
+          onPressed: () {
+            widget.language.value =
+                widget._settingsController.language.value.languageCode;
+            Navigator.of(Get.overlayContext!).pop();
+          },
+          child: Text('cancel'.tr),
+        ),
+      ],
+    );
+  }
+
   Widget getPassword() {
     return AlertDialog(
-      title: const Text('Password'),
+      title: Text('password'.tr),
       content: TextField(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: widget.password,
-          hintText: 'Enter new password',
+          hintText: 'enterNewPass'.tr,
         ),
         keyboardType: TextInputType.text,
         onChanged: (text) {
@@ -108,7 +161,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Ok'),
+          child: Text('ok'.tr),
         ),
         ElevatedButton(
           onPressed: () {
@@ -116,7 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 widget._settingsController.currentPlayer?.password ?? '';
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ],
     );
@@ -124,12 +177,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget getDialogName() {
     return AlertDialog(
-      title: const Text('Name player'),
+      title: Text('namePlayer'.tr),
       content: TextField(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: widget.namePlayer,
-          hintText: 'Enter name player',
+          hintText: 'enterNamePlayer'.tr,
         ),
         keyboardType: TextInputType.text,
         onChanged: (text) {
@@ -145,7 +198,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Ok'),
+          child: Text('ok'.tr),
         ),
         ElevatedButton(
           onPressed: () {
@@ -153,7 +206,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 widget._settingsController.currentPlayer?.name ?? '';
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ],
     );
@@ -161,12 +214,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget getDialogCurrency() {
     return AlertDialog(
-      title: const Text('Currency'),
+      title: Text('currency'.tr),
       content: TextField(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: widget.currency,
-          hintText: 'Enter short currency',
+          hintText: 'enterShortCurrency'.tr,
         ),
         keyboardType: TextInputType.text,
         onChanged: (text) {
@@ -182,14 +235,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Ok'),
+          child: Text('ok'.tr),
         ),
         ElevatedButton(
           onPressed: () {
             widget.currency = widget._settingsController.currency.value;
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ],
     );
@@ -197,12 +250,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
   Widget getDialogHourPrice() {
     return AlertDialog(
-      title: const Text('Hour price'),
+      title: Text('hourPrice'.tr),
       content: TextField(
         decoration: InputDecoration(
           border: const OutlineInputBorder(),
           labelText: widget.hourPrice.toString(),
-          hintText: 'Enter new price',
+          hintText: 'enterHourPrice'.tr,
         ),
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
@@ -221,14 +274,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
             widget._settingsController.saveData();
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Ok'),
+          child: Text('Ok'.tr),
         ),
         ElevatedButton(
           onPressed: () {
             widget.hourPrice = widget._settingsController.priceForHour.value;
             Navigator.of(Get.overlayContext!).pop();
           },
-          child: const Text('Cancel'),
+          child: Text('cancel'.tr),
         ),
       ],
     );

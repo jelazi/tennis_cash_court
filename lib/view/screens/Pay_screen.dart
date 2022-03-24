@@ -58,7 +58,7 @@ class _PayScreenState extends State<PayScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'From date: ' +
+                                'fromDate'.tr +
                                     (hourController
                                             .firstLastDateUnpaid.isNotEmpty
                                         ? DateFormat('dd. MM. yyyy').format(
@@ -71,7 +71,7 @@ class _PayScreenState extends State<PayScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'To date: ' +
+                                'toDate'.tr +
                                     (hourController
                                             .firstLastDateUnpaid.isNotEmpty
                                         ? DateFormat('dd. MM. yyyy').format(
@@ -85,17 +85,17 @@ class _PayScreenState extends State<PayScreen> {
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Total hours: ' +
+                                'totalHours'.tr +
                                     hourController.summaryHours
                                         .toStringAsFixed(1) +
-                                    ' hours',
+                                    'hours'.tr,
                                 style: sumStyle,
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
-                                'Total price: ' +
+                                'totalPrice'.tr +
                                     hourController.totalPrice
                                         .toStringAsFixed(0) +
                                     ' ' +
@@ -107,7 +107,7 @@ class _PayScreenState extends State<PayScreen> {
                         ),
                       ),
                     ))
-                : Center(child: Text('There is nothing to pay!')),
+                : Center(child: Text('nothingToPay'.tr)),
           ],
         ),
       ),
@@ -117,7 +117,7 @@ class _PayScreenState extends State<PayScreen> {
           child: FloatingActionButton.extended(
             onPressed: () => payTennisHour(),
             icon: Icon(Icons.payments),
-            label: Text("Payment all hours"),
+            label: Text('paymentAllHours'.tr),
           ),
         ),
       ),

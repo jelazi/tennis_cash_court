@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -9,17 +10,27 @@ class SettingsController extends GetxController {
   RxString currency = RxString('Kč');
   Player? currentPlayer;
   List<Player> _listPlayers = [];
+  Rx<Locale> language = Rx(Locale('cs', 'CZ'));
 
   loadData() async {
     final box = GetStorage();
     priceForHour = RxInt(await box.read('priceForHour') ?? 100);
     currency = RxString(await box.read('currency') ?? 'Kč');
+    language = Rx(Locale(await box.read('language') ?? 'cs'));
     if (box.hasData('player')) {
       currentPlayer = Player.fromJson(await box.read('player'));
     } else {
       logger.d('First run app');
     }
     _listPlayers = getDefaultPlayers();
+  }
+
+  Locale getLocale(String nameLanguage) {
+    logger.d(nameLanguage);
+    if (nameLanguage == 'cs') {
+      return Locale('cs', 'CZ');
+    }
+    return Locale('en', 'US');
   }
 
   updateListPlayers(List<Player> players) {
@@ -54,6 +65,7 @@ class SettingsController extends GetxController {
     await box.write('currency', currency.value);
     logger.d(currentPlayer?.name);
     await box.write('player', currentPlayer?.toJson());
+    await box.write('language', language.value.languageCode);
   }
 
   bool isCorrectPlayer(String name, String password) {

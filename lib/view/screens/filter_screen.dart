@@ -57,8 +57,8 @@ class _FilterScreenState extends State<FilterScreen> {
             ),
             TextField(
               onChanged: (value) => _runFilter(value),
-              decoration: const InputDecoration(
-                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
+              decoration: InputDecoration(
+                  labelText: 'search'.tr, suffixIcon: Icon(Icons.search)),
             ),
             const SizedBox(
               height: 20,

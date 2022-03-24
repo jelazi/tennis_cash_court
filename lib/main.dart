@@ -8,6 +8,7 @@ import 'controllers/settings.controller.dart';
 import 'controllers/authentication/authentication_state.dart';
 import 'controllers/authentication/login/login_page.dart';
 import 'controllers/authentication/splash_screen.dart';
+import 'others/languages.dart';
 import 'view/navbar/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -39,7 +40,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthenticationController authenticationController = Get.find();
     return GetMaterialApp(
-      title: 'Tennis cash counter',
+      title: 'nameApp'.tr,
+      translations: Languages(),
+      locale: Locale('cs', 'CZ'),
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

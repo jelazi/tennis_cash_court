@@ -20,15 +20,17 @@ class _SyncScreenState extends State<SyncScreen> {
   final HourController hourController = Get.find();
   final databaseReference = FirebaseDatabase.instance.ref();
   final SettingsController _settingsController = Get.find();
+  final StorageModel _preferencesModel = StorageModel();
 
   updateHoursToServerFirebase() {
-    widget._databaseModel.setTennisHoursList(hourController.listTennisHourReal);
+    List<TennisHour> list = hourController.listTennisHours;
+    widget._databaseModel.setTennisHoursList(list);
   }
 
   viewHoursFirebase() async {
     List<TennisHour> tennisHourList =
         await widget._databaseModel.getTennisHourListFromDatabase();
-    tennisHourList.map((e) => logger.d(e.toMap())).toList();
+    tennisHourList.map((e) => logger.d(e.toJson())).toList();
   }
 
   updateHoursFromServerFirebase() async {
@@ -52,8 +54,7 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   getData() {
-    StorageModel preferencesModel = StorageModel();
-    preferencesModel.getTennisHoursFromStorage();
+    hourController.loadData();
   }
 
   deleteData() {
@@ -79,7 +80,8 @@ class _SyncScreenState extends State<SyncScreen> {
   }
 
   saveData() {
-    logger.d('save data to preferences => nothing');
+    logger.d('save data');
+    hourController.saveData();
   }
 
   @override

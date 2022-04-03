@@ -1,36 +1,45 @@
+import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
 import '../constants.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+import '../controllers/settings.controller.dart';
+
+part 'tennis_hour.g.dart';
+
+@JsonSerializable()
 class TennisHour {
   late double hours;
   late DateTime date;
-  List partner = [];
-  List<String> playerPayd = [];
+  List<String> partners = [];
   bool _isPayd = false;
   late String id;
 
+  SettingsController _settingsController = Get.find();
+
   TennisHour(
-      {required this.date, required this.hours, this.partner = const []}) {
+    this.date,
+    this.hours,
+  ) {
     _generateId();
   }
 
-  TennisHour.fromMap(Map map) {
-    try {
-      date =
-          (map['date'] != null) ? DateTime.parse(map['date']) : DateTime.now();
-      hours = (map['hours'] != null) ? (map['hours'] as int).toDouble() : 0.0;
-      partner = (map['partner'] != null) ? map['partner'] : [];
-      _isPayd = map['isSold'] == 'true' ? true : false;
-      id = map['id'] ?? '';
-    } catch (e) {
-      logger.e(e);
-      date = DateTime.now();
-      hours = 2.0;
-      var uuidGener = Uuid();
-      id = uuidGener.v1();
-    }
+  factory TennisHour.fromJson(Map<String, dynamic> json) =>
+      _$TennisHourFromJson(json);
+  Map<String, dynamic> toJson() => _$TennisHourToJson(this);
+
+  void _generateId() {
+    var uuidGener = Uuid();
+    id = uuidGener.v1();
+  }
+
+  List<String> get partnerWithoutCurrentPlayer {
+    List<String> list = partners.toList();
+    logger.d(list);
+    list.remove(_settingsController.currentPlayer?.name ?? '');
+    return list;
   }
 
   bool get isPayd {
@@ -41,37 +50,21 @@ class TennisHour {
     _isPayd = isPayd;
   }
 
-  Map<String, dynamic> toMap() {
-    Map<String, dynamic> map = {
-      'hours': hours,
-      'date': date.toString(),
-      'partner': partner,
-      'isSold': _isPayd.toString(),
-      'id': id,
-    };
-    return map;
-  }
-
   String getAllChars() {
     //for filtering
     String allChars = '';
     allChars = hours.toString();
     DateFormat formatter = DateFormat('dd. MM. yyyy');
     allChars += formatter.format(date);
-    allChars += partner.join();
+    allChars += partners.join();
     return allChars;
-  }
-
-  void _generateId() {
-    var uuidGener = Uuid();
-    id = uuidGener.v1();
   }
 
   bool updateDatas(TennisHour hourUpdate) {
     if (hourUpdate.id != id) return false;
     _isPayd = hourUpdate.isPayd;
     hours = hourUpdate.hours;
-    partner = hourUpdate.partner;
+    partners = hourUpdate.partners;
     date = hourUpdate.date;
     return true;
   }

@@ -1,3 +1,6 @@
+import 'dart:collection';
+import 'dart:convert';
+
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import './tennis_hour.dart';
@@ -16,14 +19,13 @@ class DatabaseModel {
 
   DatabaseModel._internal();
 
-  void setTennisHoursList(RxList<TennisHour> data) async {
+  void setTennisHoursList(List<TennisHour> data) async {
     Map<String, dynamic> map = {};
     for (int index = 0; index < data.length; index++) {
-      logger.d(data[index].toMap());
-      map['hour' + index.toString()] = data[index].toMap();
+      map['hour' + index.toString()] = data[index].toJson();
     }
-
-    await databaseHours.update(map);
+    await databaseHours.set(map);
+    // await databaseHours.update(map);
   }
 
   setListPlayers(List<dynamic> listPlayers) async {
@@ -55,14 +57,19 @@ class DatabaseModel {
     await databaseHours.once().then((event) {
       final dataSnapshot = event.snapshot;
 
-      Map<dynamic, dynamic>? map = dataSnapshot.value as Map?;
+      Map? map = dataSnapshot.value as Map?;
       if (map == null) return tennisHour;
-      List listData = map.values.toList();
 
-      for (int i = 0; i < listData.length; i++) {
-        TennisHour hour = TennisHour.fromMap(listData[i]);
-        tennisHour.add(hour);
-      }
+      map.forEach((key, value) {
+        Map<String, dynamic> map = Map.from(value);
+        logger.d('partners');
+        logger.d(map['partners']);
+        try {
+          tennisHour.add(TennisHour.fromJson(map));
+        } catch (e) {
+          logger.e(e);
+        }
+      });
       return tennisHour;
     });
     return tennisHour;

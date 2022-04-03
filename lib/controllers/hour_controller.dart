@@ -1,4 +1,6 @@
-import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import 'dart:convert';
+
+import 'settings.controller.dart';
 
 import '../constants.dart';
 import '../model/storage_model.dart';
@@ -7,16 +9,11 @@ import 'package:get/get.dart';
 
 class HourController extends GetxController {
   SettingsController settingsController = Get.find();
-  var listTennisHours = [].obs;
+  RxList<TennisHour> listTennisHours = RxList<TennisHour>();
   RxBool isListTennisHourUnpaidNotEmpty = RxBool(false);
 
-  RxList<TennisHour> get listTennisHourReal {
-    RxList<TennisHour> list = RxList();
-    for (TennisHour tennisHour in listTennisHours) {
-      list.add(tennisHour);
-    }
-
-    return list;
+  HourController() {
+    loadData();
   }
 
   RxList get listTennisHourUnpaid {
@@ -32,7 +29,7 @@ class HourController extends GetxController {
 
   List<Map<String, dynamic>> getListMapTennisHour() {
     List<Map<String, dynamic>> list = [];
-    listTennisHours.map((e) => list.add(e.toMap())).toList();
+    listTennisHours.map((e) => list.add(e.toJson())).toList();
     return list;
   }
 
@@ -40,14 +37,14 @@ class HourController extends GetxController {
     for (var i = 0; i < listTennisHours.length; i++) {
       listTennisHours[i].isPayd = true;
     }
-    _setData(listTennisHours);
+    saveData();
     isListTennisHourUnpaidNotEmpty.value = false;
   }
 
   RxDouble get totalPrice {
     RxDouble sum = RxDouble(0);
     listTennisHours.map((hour) {
-      int sumPartners = hour.partner.isEmpty ? 1 : hour.partner.length + 1;
+      int sumPartners = hour.partners.length;
       if (!hour.isPayd)
         sum.value +=
             (hour.hours * (settingsController.priceForHour / sumPartners));
@@ -73,7 +70,7 @@ class HourController extends GetxController {
   List<String> getListCurrentPartners() {
     List<String> list = [''];
     listTennisHours.map((hour) {
-      hour.partner.map((partner) {
+      hour.partners.map((partner) {
         if (!list.contains(partner)) list.add(partner);
       }).toList();
     }).toList();
@@ -89,31 +86,34 @@ class HourController extends GetxController {
     return sum;
   }
 
-  Future loadData() async {
+  Future<void> loadData() async {
     StorageModel storrageModel = StorageModel();
-    await storrageModel
-        .getTennisHoursFromStorage()
-        .then((value) => listTennisHours.value = value)
-        .then((_) => null);
+    List<TennisHour> list =
+        await storrageModel.getTennisHoursFromStorage() as List<TennisHour>;
+
+    listTennisHours.value = list;
+  }
+
+  saveData() async {
+    List<TennisHour> list = listTennisHours;
+    StorageModel storageModel = StorageModel();
+    await storageModel.saveTennisHoursToStorage(list);
   }
 
   void addNewHour(TennisHour tennisHour) {
     listTennisHours.add(tennisHour);
     listTennisHourUnpaid.add(tennisHour);
-    _setData(listTennisHours);
+    saveData();
     isListTennisHourUnpaidNotEmpty.value = true;
   }
 
-  void _setData(List listTennisHours) async {
-    StorageModel preferencesModel = StorageModel();
-    preferencesModel.saveTennisHoursToStorage(listTennisHours);
-  }
-
   void updateDatas(List<TennisHour> data) {
+    logger.d(data);
     for (TennisHour hour in data) {
       bool isUpdate = false;
       for (TennisHour hourCur in listTennisHours) {
         isUpdate = hourCur.updateDatas(hour);
+        if (isUpdate) break;
       }
       if (!isUpdate) listTennisHours.add(hour);
     }
@@ -121,6 +121,6 @@ class HourController extends GetxController {
 
   void deleteHour(TennisHour hourForDelete) {
     listTennisHours.removeWhere((element) => (element.id == hourForDelete.id));
-    _setData(listTennisHours);
+    saveData();
   }
 }

@@ -3,6 +3,7 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_picker/flutter_picker.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
 import '../../controllers/hour_controller.dart';
 import 'partner_dropdown_button.dart';
 import '../../model/tennis_hour.dart';
@@ -24,6 +25,7 @@ class AddNewHourDialog extends StatefulWidget {
 }
 
 class _AddNewHourDialogState extends State<AddNewHourDialog> {
+  final SettingsController _settingsController = Get.find();
   String numberHour = '2,0';
   DateTime dateTime = DateTime.now();
   TextStyle labelStyle = TextStyle(
@@ -70,12 +72,14 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                       .toSet()
                       .toList(); //remove more empty string;
                   currentPartnerCardsNames.remove('');
-                  widget.addNewHour(
-                    TennisHour(
-                        date: dateTime,
-                        hours: double.parse(numberHour.replaceAll(',', '.')),
-                        partner: currentPartnerCardsNames),
-                  );
+                  TennisHour tennisHour = TennisHour(
+                      dateTime,
+                      double.parse(
+                        numberHour.replaceAll(',', '.'),
+                      ));
+                  tennisHour.partners += currentPartnerCardsNames;
+                  widget.addNewHour(tennisHour);
+
                   Navigator.pop(context);
                 }
               },

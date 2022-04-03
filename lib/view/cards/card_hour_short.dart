@@ -33,7 +33,7 @@ class CardHourShort extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'partner'.tr + tennisHour.partner.join(", "),
+              'partner'.tr + tennisHour.partnerWithoutCurrentPlayer.join(", "),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

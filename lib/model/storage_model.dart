@@ -6,8 +6,14 @@ import 'dart:convert';
 import 'package:get_storage/get_storage.dart';
 
 class StorageModel {
+  static final StorageModel _singleton = StorageModel._internal();
+
+  factory StorageModel() {
+    return _singleton;
+  }
+  StorageModel._internal();
+
   final box = GetStorage();
-  StorageModel();
 
   saveTennisHoursToStorage(List listTennisHours) async {
     await box.write('listHours', _encodeTennisHoursToJson(listTennisHours));
@@ -18,19 +24,19 @@ class StorageModel {
   }
 
   deleteTennisHourFromStorage() async {
-    print('delete data');
+    logger.d('delete data');
     await box.remove('listHours');
   }
 
   List _decodeHoursFromJson(String hours) {
     if (hours.isEmpty) return [].obs;
     return (json.decode(hours))
-        .map<TennisHour>((item) => TennisHour.fromMap(item))
+        .map<TennisHour>((item) => TennisHour.fromJson(item))
         .toList();
   }
 
   String _encodeTennisHoursToJson(List list) => json.encode(
-        list.map<Map<String, dynamic>>((hour) => hour.toMap()).toList(),
+        list.map<Map<String, dynamic>>((hour) => hour.toJson()).toList(),
       );
 
   Future<Player?> getCurrentPlayerFromStorage() async {

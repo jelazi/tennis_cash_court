@@ -40,7 +40,7 @@ class _FilterScreenState extends State<FilterScreen> {
 
     // Refresh the UI
     setState(() {
-      _foundUsers.value = results;
+      _foundUsers = results;
     });
   }
 

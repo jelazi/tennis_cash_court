@@ -39,16 +39,16 @@ class _SumCardState extends State<SumCard> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Total hours: ' +
+                    'totalHours'.tr +
                         hourController.summaryHours.value.toStringAsFixed(1) +
-                        ' hours',
+                        'hours'.tr,
                     style: sumStyle,
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    'Total price: ' +
+                    'totalPrice'.tr +
                         hourController.totalPrice.value.toStringAsFixed(0) +
                         ' ' +
                         settingsController.currency.value,
@@ -63,7 +63,7 @@ class _SumCardState extends State<SumCard> {
                   alignment: Alignment.centerRight,
                   child: FloatingActionButton(
                     onPressed: displayAddHour,
-                    tooltip: 'Add new hour',
+                    tooltip: 'addNewHour'.tr,
                     child: const Icon(Icons.add),
                   ),
                 )

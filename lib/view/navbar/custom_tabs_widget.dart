@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import '../screens/filter_screen.dart';
 import '../screens/pay_screen.dart';
@@ -51,31 +52,31 @@ class _CustomWidgetState extends State<CustomWidget> {
     return [
       PersistentBottomNavBarItem(
         icon: Icon(Icons.sports_tennis),
-        title: "Current",
+        title: 'current'.tr,
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.filter_alt),
-        title: ("Filter"),
+        title: 'filter'.tr,
         activeColorPrimary: Colors.teal,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.attach_money),
-        title: ("Pay"),
+        title: 'pay'.tr,
         activeColorPrimary: Colors.deepOrange,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.sync),
-        title: ("Synchronization"),
+        title: 'synchronization'.tr,
         activeColorPrimary: Colors.indigo,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
         icon: Icon(Icons.settings),
-        title: ("Settings"),
+        title: 'settings'.tr,
         activeColorPrimary: Colors.indigo,
         inactiveColorPrimary: Colors.grey,
       ),

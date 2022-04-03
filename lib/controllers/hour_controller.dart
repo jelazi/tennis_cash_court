@@ -77,7 +77,7 @@ class HourController extends GetxController {
         if (!list.contains(partner)) list.add(partner);
       }).toList();
     }).toList();
-    list.add('..add new name');
+    list.add('addNewName'.tr);
     return list;
   }
 

@@ -14,7 +14,7 @@ class _FilterScreenState extends State<FilterScreen> {
   final HourController hourController = Get.find();
   bool editable = false;
 
-  List _foundUsers = [];
+  RxList _foundUsers = RxList();
   @override
   initState() {
     // at the beginning, all users are shown
@@ -24,12 +24,12 @@ class _FilterScreenState extends State<FilterScreen> {
 
   // This function is called whenever the text field changes
   void _runFilter(String enteredKeyword) {
-    List results = [];
+    RxList results = RxList();
     if (enteredKeyword.isEmpty) {
       // if the search field is empty or only contains white-space, we'll display all users
       results = hourController.listTennisHours;
     } else {
-      results = hourController.listTennisHours
+      results.value = hourController.listTennisHours
           .where((user) => user
               .getAllChars()
               .toLowerCase()
@@ -40,7 +40,7 @@ class _FilterScreenState extends State<FilterScreen> {
 
     // Refresh the UI
     setState(() {
-      _foundUsers = results;
+      _foundUsers.value = results;
     });
   }
 
@@ -68,17 +68,17 @@ class _FilterScreenState extends State<FilterScreen> {
               child: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height - 200,
-                child: Obx(() => ListView(
-                      shrinkWrap: true,
-                      children: hourController.listTennisHours
-                          .map((element) => InkWell(
-                                child: CardHour(
-                                  element,
-                                  editable,
-                                ),
-                              ))
-                          .toList(),
-                    )),
+                child: ListView(
+                  shrinkWrap: true,
+                  children: _foundUsers
+                      .map((element) => InkWell(
+                            child: CardHour(
+                              element,
+                              editable,
+                            ),
+                          ))
+                      .toList(),
+                ),
               ),
             ),
             Positioned(
@@ -86,7 +86,7 @@ class _FilterScreenState extends State<FilterScreen> {
               child: SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: 100,
-                  child: SumCard(setState, editable)),
+                  child: Container()),
             ),
           ],
         ),

@@ -36,7 +36,7 @@ class _CardHourState extends State<CardHour> {
               backgroundColor: Colors.green,
               foregroundColor: Colors.white,
               icon: Icons.edit_rounded,
-              label: 'Edit',
+              label: 'edit'.tr,
             ),
           ],
         ),
@@ -49,7 +49,7 @@ class _CardHourState extends State<CardHour> {
               backgroundColor: Colors.red,
               foregroundColor: Colors.white,
               icon: Icons.delete,
-              label: 'Delete',
+              label: 'delete'.tr,
             ),
           ],
         ),
@@ -93,7 +93,7 @@ class CustomCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Partner: ' + tennisHour.partner.join(", "),
+                  'partner'.tr + tennisHour.partner.join(", "),
                   style: const TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,
@@ -105,7 +105,7 @@ class CustomCard extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              tennisHour.hours.toString() + ' hours',
+              tennisHour.hours.toString() + 'hours'.tr,
               style: TextStyle(
                 color: Colors.blue.shade800,
                 fontWeight: FontWeight.bold,

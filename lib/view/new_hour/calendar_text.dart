@@ -1,5 +1,6 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarText extends StatefulWidget {
@@ -20,7 +21,7 @@ class _CalendarTextState extends State<CalendarText> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text('Date: ', style: widget.labelStyle),
+          Text('date'.tr, style: widget.labelStyle),
           Expanded(
             child: DateTimeField(
               initialValue: DateTime.now(),

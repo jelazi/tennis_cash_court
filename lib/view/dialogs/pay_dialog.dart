@@ -12,18 +12,18 @@ class PayDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Pay tennis hours"),
-      content: Text("Do you want pay all hours? Price is $sum."),
+      title: Text("payTennisHours".tr),
+      content: Text('payTennisQuestion' + sum),
       actions: [
         TextButton(
-          child: Text("Ok"),
+          child: Text('ok'.tr),
           onPressed: () {
             hourController.payAll();
             Navigator.of(Get.overlayContext!).pop();
           },
         ),
         TextButton(
-          child: Text("Cancel"),
+          child: Text("cancel".tr),
           onPressed: () {
             Navigator.of(Get.overlayContext!).pop();
           },

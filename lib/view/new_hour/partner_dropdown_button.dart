@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class PartnerDropDownButton extends StatefulWidget {
   final String partnerCard;
@@ -35,7 +36,7 @@ class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
       }).toList(),
       onChanged: (String? newValue) {
         setState(() {
-          if (newValue! == '..add new name') {
+          if (newValue! == 'addNewName'.tr) {
             _showNewNameDialog(widget.textFieldController);
           } else {
             widget.changeName(newValue, widget.index);
@@ -52,21 +53,21 @@ class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: const Text('New partner name'),
+            title: Text('newNamePartner'.tr),
             content: TextField(
               autofocus: true,
               onChanged: (value) {
                 setValue = value;
               },
               controller: textFieldController,
-              decoration: const InputDecoration(hintText: "New name"),
+              decoration: InputDecoration(hintText: 'newName'.tr),
             ),
             actions: [
               TextButton(
                 onPressed: () {
                   if (widget.possiblePartnerCardsNames.contains(setValue)) {
                     var snackBar = SnackBar(
-                      content: Text("The name $setValue exists!"),
+                      content: Text('thisName'.tr + setValue + 'exists'.tr),
                     );
                     ScaffoldMessenger.of(context).showSnackBar(snackBar);
                   } else {
@@ -79,7 +80,7 @@ class _PartnerDropDownButtonState extends State<PartnerDropDownButton> {
                     });
                   }
                 },
-                child: const Text('OK'),
+                child: Text('ok'.tr),
               )
             ],
           );

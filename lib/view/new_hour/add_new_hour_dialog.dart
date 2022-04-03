@@ -45,7 +45,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Add new Tennis course'),
+        title: Text('addNewTennisCourse'.tr),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 20.0),
@@ -57,8 +57,8 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                       i < currentPartnerCardsNames.length;
                       i++) {
                     if (e == currentPartnerCardsNames[i]) {
-                      var snackBar = const SnackBar(
-                        content: Text("Two same name partners!"),
+                      var snackBar = SnackBar(
+                        content: Text('sameNamePartners'.tr),
                       );
                       ScaffoldMessenger.of(context).showSnackBar(snackBar);
                       isCorrect = false;
@@ -101,7 +101,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                 child: Row(
                   children: [
                     Text(
-                      'Hours: ',
+                      'hours:'.tr,
                       style: labelStyle,
                     ),
                     Expanded(
@@ -126,7 +126,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                     Padding(
                       padding: const EdgeInsets.only(top: 8),
                       child: Text(
-                        'Partner: ',
+                        'partner'.tr,
                         style: labelStyle,
                       ),
                     ),
@@ -151,7 +151,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
                 ),
               ),
               InkWell(
-                  child: Text("ADD PARTNER"),
+                  child: Text('addPartner'.tr),
                   onTap: () {
                     if (currentPartnerCardsNames.last.isNotEmpty) {
                       currentPartnerCardsNames.add('');
@@ -193,7 +193,7 @@ class _AddNewHourDialogState extends State<AddNewHourDialog> {
           ))
         ],
         hideHeader: true,
-        title: const Text("Please Select Hours"),
+        title: Text('selectHours'.tr),
         selectedTextStyle: const TextStyle(color: Colors.blue),
         onConfirm: (Picker picker, List value) {
           setState(() {

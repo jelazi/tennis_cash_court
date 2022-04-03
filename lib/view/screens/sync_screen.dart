@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
-import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import '../../controllers/settings.controller.dart';
 
 import '../../constants.dart';
 import '../../model/database_model.dart';
@@ -58,18 +58,18 @@ class _SyncScreenState extends State<SyncScreen> {
 
   deleteData() {
     Get.dialog(AlertDialog(
-      title: Text("Delete"),
-      content: Text("Do you want delete all data"),
+      title: Text('delete'.tr),
+      content: Text('questDelete'.tr),
       actions: [
         TextButton(
-          child: Text("Ok"),
+          child: Text('ok'.tr),
           onPressed: () {
             hourController.listTennisHours.clear();
             Navigator.of(Get.overlayContext!).pop();
           },
         ),
         TextButton(
-          child: Text("Cancel"),
+          child: Text('cancel'.tr),
           onPressed: () {
             Navigator.of(Get.overlayContext!).pop();
           },

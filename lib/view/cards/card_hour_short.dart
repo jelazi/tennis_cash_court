@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
 
@@ -32,7 +33,7 @@ class CardHourShort extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-              'Partner: ' + tennisHour.partner.join(", "),
+              'partner'.tr + tennisHour.partner.join(", "),
               style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,

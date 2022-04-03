@@ -36,13 +36,14 @@ main() async {
 }
 
 class MyApp extends StatelessWidget {
+  final SettingsController _settingsController = Get.find();
   @override
   Widget build(BuildContext context) {
     final AuthenticationController authenticationController = Get.find();
     return GetMaterialApp(
       title: 'nameApp'.tr,
       translations: Languages(),
-      locale: Locale('cs', 'CZ'),
+      locale: _settingsController.language.value,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),

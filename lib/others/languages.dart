@@ -2,7 +2,6 @@ import 'package:get/route_manager.dart';
 
 class Languages extends Translations {
   @override
-  // TODO: implement keys
   Map<String, Map<String, String>> get keys => {
         'cs_Cz': {
           'hello': 'Ahoj',

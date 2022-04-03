@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import '../settings.controller.dart';
 import 'package:tennis_cash_court/model/database_model.dart';
 
 import '../../constants.dart';

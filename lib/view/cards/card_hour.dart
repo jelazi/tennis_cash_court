@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tennis_cash_court/controllers/hour_controller.dart';
+import '../../constants.dart';
 import '../../model/tennis_hour.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -93,7 +94,8 @@ class CustomCard extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'partner'.tr + tennisHour.partner.join(", "),
+                  'partner'.tr +
+                      tennisHour.partnerWithoutCurrentPlayer.join(", "),
                   style: const TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,

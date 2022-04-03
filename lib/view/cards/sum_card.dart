@@ -95,6 +95,7 @@ class _SumCardState extends State<SumCard> {
   }
 
   void addNewHour(TennisHour tennisHour) {
+    tennisHour.partners.add(settingsController.currentPlayer?.name ?? '');
     hourController.addNewHour(tennisHour);
   }
 }

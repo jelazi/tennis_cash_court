@@ -87,100 +87,105 @@ class _SyncScreenState extends State<SyncScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => updateHoursToServerFirebase(),
-                  child: Text("Update hours to server"),
+      body: Container(
+        child: Visibility(
+          visible: _settingsController.currentPlayer!.isAdmin,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => updateHoursToServerFirebase(),
+                      child: Text("Update hours to server"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => updatePlayersToServerFirebase(),
-                  child: Text("Update players to server"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => updatePlayersToServerFirebase(),
+                      child: Text("Update players to server"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => updateHoursFromServerFirebase(),
-                  child: Text("Update hours from server"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => updateHoursFromServerFirebase(),
+                      child: Text("Update hours from server"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => updatePlayersFromServerFirebase(),
-                  child: Text("Update players from server"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => updatePlayersFromServerFirebase(),
+                      child: Text("Update players from server"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => viewHoursFirebase(),
-                  child: Text("View Data Firebase"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => viewHoursFirebase(),
+                      child: Text("View Data Firebase"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => deleteDataFirebase(),
-                  child: Text("Delete data Firabese"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => deleteDataFirebase(),
+                      child: Text("Delete data Firabese"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => getData(),
-                  child: Text("get data"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => getData(),
+                      child: Text("get data"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => saveData(),
-                  child: Text("save data"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => saveData(),
+                      child: Text("save data"),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: ElevatedButton(
-                  onPressed: () => deleteData(),
-                  child: Text("delete data"),
+                SizedBox(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: ElevatedButton(
+                      onPressed: () => deleteData(),
+                      child: Text("delete data"),
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     );

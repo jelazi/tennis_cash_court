@@ -71,7 +71,9 @@ class HourController extends GetxController {
     List<String> list = [''];
     listTennisHours.map((hour) {
       hour.partners.map((partner) {
-        if (!list.contains(partner)) list.add(partner);
+        if (!list.contains(partner) &&
+            partner != settingsController.currentPlayer!.name)
+          list.add(partner);
       }).toList();
     }).toList();
     list.add('addNewName'.tr);

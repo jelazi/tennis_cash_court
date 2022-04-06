@@ -3,7 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:get/get.dart';
 import '../../controllers/settings.controller.dart';
 
-import '../../constants.dart';
+import '../../others/constants.dart';
 import '../../model/database_model.dart';
 import '../../controllers/hour_controller.dart';
 import '../../model/tennis_hour.dart';

@@ -50,7 +50,9 @@ class Languages extends Translations {
           'newName': 'Nové jméno',
           'thisName': 'Zadané jméno ',
           'exists': ' již existuje',
-          'questDelete': 'Chcete vymazat všechny data?'
+          'questDelete': 'Chcete vymazat všechny data?',
+          'logoutPlayerTitle': 'Odhlášení hráče',
+          'logoutPlayerMess': 'CHcete se odhlásit?',
         },
         'en_US': {
           'hello': 'Hello',
@@ -99,7 +101,9 @@ class Languages extends Translations {
           'newName': 'New name',
           'thisName': 'This name ',
           'exists': ' have existed',
-          'questDelete': 'Do you want delete all data?'
+          'questDelete': 'Do you want delete all data?',
+          'logoutPlayerTitle': 'Logout player',
+          'logoutPlayerMess': 'Do you want logout?',
         },
       };
 }

@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import '../settings.controller.dart';
 import 'package:tennis_cash_court/model/database_model.dart';
 
-import '../../constants.dart';
+import '../../others/constants.dart';
 import '../../model/player.dart';
 import 'authentication_service.dart';
 import 'authentication_state.dart';

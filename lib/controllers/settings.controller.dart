@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
-import '../constants.dart';
+import '../others/constants.dart';
 import '../model/player.dart';
 
 class SettingsController extends GetxController {
@@ -11,6 +11,14 @@ class SettingsController extends GetxController {
   Player? currentPlayer;
   List<Player> _listPlayers = [];
   Rx<Locale> language = Rx(Locale('cs', 'CZ'));
+
+  RxBool get getAdmin {
+    if (currentPlayer == null) {
+      return RxBool(false);
+    } else {
+      return RxBool(currentPlayer!.isAdmin);
+    }
+  }
 
   loadData() async {
     final box = GetStorage();

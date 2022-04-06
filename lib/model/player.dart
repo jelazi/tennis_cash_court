@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
+import '../others/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'player.g.dart';

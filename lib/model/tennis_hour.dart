@@ -2,7 +2,7 @@ import 'package:get/get.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
-import '../constants.dart';
+import '../others/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../controllers/settings.controller.dart';
@@ -37,7 +37,7 @@ class TennisHour {
 
   List<String> get partnerWithoutCurrentPlayer {
     List<String> list = partners.toList();
-    logger.d(list);
+    logger.v(list);
     list.remove(_settingsController.currentPlayer?.name ?? '');
     return list;
   }

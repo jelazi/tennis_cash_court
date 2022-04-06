@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:tennis_cash_court/controllers/settings.controller.dart';
+import 'package:tennis_cash_court/view/screens/players_administrator.dart';
 import '../screens/filter_screen.dart';
 import '../screens/pay_screen.dart';
 import '../screens/sync_screen.dart';
@@ -18,6 +20,7 @@ class CustomWidget extends StatefulWidget {
 }
 
 class _CustomWidgetState extends State<CustomWidget> {
+  final SettingsController _settingsController = Get.find();
   late PersistentTabController _controller;
   late bool _hideNavBar;
   String title = 'Title';
@@ -86,7 +89,27 @@ class _CustomWidgetState extends State<CustomWidget> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Tennis court counter')),
+      appBar: AppBar(
+        title: const Text('Tennis court counter'),
+        actions: [
+          Obx(
+            () => Visibility(
+              visible: _settingsController.getAdmin.value,
+              child: Padding(
+                  padding: const EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Get.to(() => PlayersAdministratorScreen());
+                    },
+                    child: const Icon(
+                      Icons.pin,
+                      size: 26.0,
+                    ),
+                  )),
+            ),
+          ),
+        ],
+      ),
       body: PersistentTabView(
         context,
         controller: _controller,

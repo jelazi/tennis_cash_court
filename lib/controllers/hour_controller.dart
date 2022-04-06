@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'settings.controller.dart';
 
-import '../constants.dart';
+import '../others/constants.dart';
 import '../model/storage_model.dart';
 import '../model/tennis_hour.dart';
 import 'package:get/get.dart';

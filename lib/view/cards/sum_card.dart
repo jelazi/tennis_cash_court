@@ -58,16 +58,18 @@ class _SumCardState extends State<SumCard> {
               ],
             ),
           ),
-          widget.addVisible
-              ? Align(
-                  alignment: Alignment.centerRight,
-                  child: FloatingActionButton(
-                    onPressed: displayAddHour,
-                    tooltip: 'addNewHour'.tr,
-                    child: const Icon(Icons.add),
-                  ),
-                )
-              : Container(),
+          Visibility(
+            visible: widget.addVisible,
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: FloatingActionButton(
+                heroTag: widget.addVisible ? 1 : 2,
+                onPressed: displayAddHour,
+                tooltip: 'addNewHour'.tr,
+                child: const Icon(Icons.add),
+              ),
+            ),
+          )
         ],
       ),
     );

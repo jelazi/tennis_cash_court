@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
+import 'package:tennis_cash_court/controllers/authentication/authentication_controller.dart';
 
-import '../../constants.dart';
+import '../../others/constants.dart';
 import '../../controllers/settings.controller.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -42,7 +43,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 leading: const Icon(Icons.sports_tennis),
                 value: Text(widget.namePlayer),
                 onPressed: (BuildContext context) {
-                  Get.dialog(getDialogName());
+                  Get.dialog(getLogout());
                 },
               ),
               SettingsTile.navigation(
@@ -175,35 +176,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget getDialogName() {
+  Widget getLogout() {
+    AuthenticationController _authenticationController = Get.find();
     return AlertDialog(
-      title: Text('namePlayer'.tr),
-      content: TextField(
-        decoration: InputDecoration(
-          border: const OutlineInputBorder(),
-          labelText: widget.namePlayer,
-          hintText: 'enterNamePlayer'.tr,
-        ),
-        keyboardType: TextInputType.text,
-        onChanged: (text) {
-          setState(() {
-            widget.namePlayer = text;
-          });
-        },
-      ),
+      title: Text('logoutPlayerTitle'.tr),
+      content: Text('logoutPlayerMess'.tr),
       actions: [
         ElevatedButton(
           onPressed: () {
-            widget._settingsController.currentPlayer?.name = widget.namePlayer;
+            widget._settingsController.currentPlayer = null;
             widget._settingsController.saveData();
+            _authenticationController.signOut();
             Navigator.of(Get.overlayContext!).pop();
           },
           child: Text('ok'.tr),
         ),
         ElevatedButton(
           onPressed: () {
-            widget.namePlayer =
-                widget._settingsController.currentPlayer?.name ?? '';
             Navigator.of(Get.overlayContext!).pop();
           },
           child: Text('cancel'.tr),

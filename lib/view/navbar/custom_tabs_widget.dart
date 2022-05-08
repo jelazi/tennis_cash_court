@@ -43,8 +43,8 @@ class _CustomWidgetState extends State<CustomWidget> {
           });
         },
       ),
-      FilterScreen(),
-      PayScreen(),
+      const FilterScreen(),
+      const PayScreen(),
       SyncScreen(),
       SettingsScreen(),
     ];
@@ -53,31 +53,31 @@ class _CustomWidgetState extends State<CustomWidget> {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.sports_tennis),
+        icon: const Icon(Icons.sports_tennis),
         title: 'current'.tr,
         activeColorPrimary: Colors.blue,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.filter_alt),
+        icon: const Icon(Icons.filter_alt),
         title: 'filter'.tr,
         activeColorPrimary: Colors.teal,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.attach_money),
+        icon: const Icon(Icons.attach_money),
         title: 'pay'.tr,
         activeColorPrimary: Colors.deepOrange,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.sync),
+        icon: const Icon(Icons.sync),
         title: 'synchronization'.tr,
         activeColorPrimary: Colors.indigo,
         inactiveColorPrimary: Colors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.settings),
+        icon: const Icon(Icons.settings),
         title: 'settings'.tr,
         activeColorPrimary: Colors.indigo,
         inactiveColorPrimary: Colors.grey,
@@ -98,7 +98,7 @@ class _CustomWidgetState extends State<CustomWidget> {
                   padding: const EdgeInsets.only(right: 20.0),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => PlayersAdministratorScreen());
+                      Get.to(() => const PlayersAdministratorScreen());
                     },
                     child: const Icon(
                       Icons.pin,

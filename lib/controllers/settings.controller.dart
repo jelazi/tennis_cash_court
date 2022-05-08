@@ -36,9 +36,9 @@ class SettingsController extends GetxController {
   Locale getLocale(String nameLanguage) {
     logger.d(nameLanguage);
     if (nameLanguage == 'cs') {
-      return Locale('cs', 'CZ');
+      return const Locale('cs', 'CZ');
     }
-    return Locale('en', 'US');
+    return const Locale('en', 'US');
   }
 
   updateListPlayers(List<Player> players) {

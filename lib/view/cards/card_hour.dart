@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:tennis_cash_court/controllers/hour_controller.dart';
 import '../../model/tennis_hour.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'custom_card.dart';

@@ -57,7 +57,7 @@ class CustomNavBarWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      child: Container(
+      child: SizedBox(
         width: double.infinity,
         height: kBottomNavigationBarHeight,
         child: Row(

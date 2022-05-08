@@ -91,10 +91,10 @@ class HourController extends GetxController {
 
   Future<void> loadData() async {
     StorageModel storrageModel = StorageModel();
-    List<TennisHour> list =
-        await storrageModel.getTennisHoursFromStorage() as List<TennisHour>;
-
-    listTennisHours.value = list;
+    var list = await storrageModel.getTennisHoursFromStorage();
+    if (list is List<TennisHour>) {
+      listTennisHours.value = list;
+    }
   }
 
   saveData() async {

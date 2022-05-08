@@ -89,7 +89,7 @@ class _CustomWidgetState extends State<CustomWidget> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tennis court counter'),
+        title: Text('tennisCountCounter'.tr),
         actions: [
           Obx(
             () => Visibility(

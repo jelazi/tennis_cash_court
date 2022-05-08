@@ -11,7 +11,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Login'),
+          title: Text('login'.tr),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.all(16),
@@ -45,8 +45,8 @@ class __SignInFormState extends State<_SignInForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Name player',
+                decoration: InputDecoration(
+                  labelText: 'namePlayer'.tr,
                   filled: true,
                   isDense: true,
                 ),
@@ -55,7 +55,7 @@ class __SignInFormState extends State<_SignInForm> {
                 autocorrect: false,
                 validator: (value) {
                   if (value == null) {
-                    return 'name is required.';
+                    return 'nameIsRequired'.tr;
                   }
                   return null;
                 },
@@ -64,8 +64,8 @@ class __SignInFormState extends State<_SignInForm> {
                 height: 12,
               ),
               TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Password',
+                decoration: InputDecoration(
+                  labelText: 'password'.tr,
                   filled: true,
                   isDense: true,
                 ),
@@ -73,7 +73,7 @@ class __SignInFormState extends State<_SignInForm> {
                 controller: _passwordController,
                 validator: (value) {
                   if (value == null) {
-                    return 'Password is required.';
+                    return 'passwordIsRequired'.tr;
                   }
                   return null;
                 },
@@ -82,7 +82,7 @@ class __SignInFormState extends State<_SignInForm> {
                 height: 16,
               ),
               ElevatedButton(
-                child: const Text('LOG IN'),
+                child: Text('loginBtn'.tr),
                 onPressed: _controller.state is LoginLoading
                     ? () {}
                     : _onLoginButtonPressed,

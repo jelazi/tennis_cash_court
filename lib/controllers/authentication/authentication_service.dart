@@ -19,7 +19,7 @@ class MyAuthenticationService extends AuthenticationService {
   @override
   Future<Player> signInWithNameAndPassword(String name, String password) async {
     if (!_settingsController.isCorrectPlayer(name, password)) {
-      throw AuthenticationException(message: 'Wrong username or password');
+      throw AuthenticationException(message: 'wrongUserOrPass'.tr);
     }
     Player currentPlayer = Player(name, password);
     if (_settingsController.isAdmin(name, password)) {
@@ -35,7 +35,7 @@ class MyAuthenticationService extends AuthenticationService {
 }
 
 class AuthenticationException implements Exception {
-  final String message;
+  String message = 'unknownError'.tr;
 
-  AuthenticationException({this.message = 'Unknown error occurred. '});
+  AuthenticationException({this.message = 'unknownError'});
 }

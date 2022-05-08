@@ -52,7 +52,14 @@ class Languages extends Translations {
           'exists': ' již existuje',
           'questDelete': 'Chcete vymazat všechny data?',
           'logoutPlayerTitle': 'Odhlášení hráče',
-          'logoutPlayerMess': 'CHcete se odhlásit?',
+          'logoutPlayerMess': 'Chcete se odhlásit?',
+          'tennisCountCounter': 'Pronájem kurtu',
+          'nameIsRequired': 'nutné vyplnit',
+          'passwordIsRequired': 'nutné vyplnit',
+          'loginBtn': 'Přihlásit',
+          'login': 'Přihlášení',
+          'wrongUserOrPass': 'Špatné jméno nebo heslo.',
+          'unknownError': 'Špatné jméno nebo heslo.',
         },
         'en_US': {
           'hello': 'Hello',
@@ -104,6 +111,12 @@ class Languages extends Translations {
           'questDelete': 'Do you want delete all data?',
           'logoutPlayerTitle': 'Logout player',
           'logoutPlayerMess': 'Do you want logout?',
+          'tennisCountCounter': 'Tennis court counter',
+          'nameIsRequired': 'Name is required',
+          'passwordIsRequired': 'Password is Required',
+          'loginBtn': 'Login',
+          'login': 'Login',
+          'wrongUserOrPass': 'Wrong user name or password.',
         },
       };
 }

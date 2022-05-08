@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class PlayersAdministratorScreen extends StatefulWidget {
-  PlayersAdministratorScreen({Key? key}) : super(key: key);
+  const PlayersAdministratorScreen({Key? key}) : super(key: key);
 
   @override
   State<PlayersAdministratorScreen> createState() =>

@@ -8,6 +8,8 @@ import '../../controllers/hour_controller.dart';
 import '../../controllers/settings.controller.dart';
 
 class PayScreen extends StatefulWidget {
+  const PayScreen({Key? key}) : super(key: key);
+
   @override
   State<PayScreen> createState() => _PayScreenState();
 }
@@ -116,7 +118,7 @@ class _PayScreenState extends State<PayScreen> {
           visible: hourController.isListTennisHourUnpaidNotEmpty.value,
           child: FloatingActionButton.extended(
             onPressed: () => payTennisHour(),
-            icon: Icon(Icons.payments),
+            icon: const Icon(Icons.payments),
             label: Text('paymentAllHours'.tr),
           ),
         ),

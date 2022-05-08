@@ -4,8 +4,8 @@ import 'package:intl/intl.dart';
 import 'package:tennis_cash_court/model/tennis_hour.dart';
 
 class CardHourShort extends StatelessWidget {
-  TennisHour tennisHour;
-  CardHourShort(this.tennisHour);
+  final TennisHour tennisHour;
+  const CardHourShort(this.tennisHour, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class CardHourShort extends StatelessWidget {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               tennisHour.hours.toString() + ' hours',
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.black,
                 fontWeight: FontWeight.bold,
                 fontSize: 20,

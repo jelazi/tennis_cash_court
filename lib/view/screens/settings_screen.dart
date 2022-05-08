@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:settings_ui/settings_ui.dart';
-import 'package:tennis_cash_court/controllers/authentication/authentication_controller.dart';
 
-import '../../others/constants.dart';
+import '../../controllers/authentication/authentication_controller.dart';
 import '../../controllers/settings.controller.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class SettingsScreen extends StatefulWidget {
   late bool isAdmin;
   late RxString language = RxString('');
 
-  SettingsScreen() {
+  SettingsScreen({Key? key}) : super(key: key) {
     namePlayer = _settingsController.currentPlayer?.name ?? '';
     password = _settingsController.currentPlayer?.password ?? '';
     hourPrice = _settingsController.priceForHour.value;
@@ -73,7 +72,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile.navigation(
-                leading: Icon(Icons.money),
+                leading: const Icon(Icons.money),
                 title: Text('currency'.tr),
                 value: Text(widget.currency),
                 onPressed: (BuildContext context) {
@@ -81,7 +80,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 },
               ),
               SettingsTile.navigation(
-                leading: Icon(Icons.language),
+                leading: const Icon(Icons.language),
                 title: Text('language'.tr),
                 value: Text(widget.language.value),
                 onPressed: (BuildContext context) {

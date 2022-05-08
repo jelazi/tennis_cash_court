@@ -9,11 +9,10 @@ import '../screens/sync_screen.dart';
 
 import '../screens/settings_screen.dart';
 import '../screens/main_sreen.dart';
-import 'custom_navbar_widget.dart';
 
 class CustomWidget extends StatefulWidget {
   final BuildContext menuScreenContext;
-  CustomWidget(this.menuScreenContext);
+  const CustomWidget(this.menuScreenContext, {Key? key}) : super(key: key);
 
   @override
   _CustomWidgetState createState() => _CustomWidgetState();

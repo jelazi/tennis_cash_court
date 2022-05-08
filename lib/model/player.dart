@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-
-import '../others/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'player.g.dart';
@@ -9,20 +6,12 @@ part 'player.g.dart';
 @JsonSerializable()
 class Player {
   String name;
-  bool _isAdmin = false;
+  bool isAdmin = false;
   String password;
-
-  bool get isAdmin {
-    return _isAdmin;
-  }
-
-  set isAdmin(bool isAdmin) {
-    _isAdmin = isAdmin;
-  }
 
   Player(this.name, this.password);
   Player.withAdminRights(this.name, this.password) {
-    _isAdmin = true;
+    isAdmin = true;
   }
 
   factory Player.fromJson(Map<String, dynamic> json) => _$PlayerFromJson(json);

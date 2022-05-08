@@ -1,22 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+
 import 'package:flutter_picker/flutter_picker.dart';
-import 'package:tennis_cash_court/controllers/settings.controller.dart';
 import '../../controllers/hour_controller.dart';
 import 'partner_dropdown_button.dart';
 import '../../model/tennis_hour.dart';
 import 'calendar_text.dart';
 
+// ignore: must_be_immutable
 class AddNewHourDialog extends StatefulWidget {
-  Function addNewHour;
+  final Function addNewHour;
   final HourController hourController = Get.find();
 
   late List<String> possiblePartnerCardsNames;
 
   AddNewHourDialog(this.addNewHour, BuildContext context,
-      Animation<double> animation, Animation<double> secondaryAnimation) {
+      Animation<double> animation, Animation<double> secondaryAnimation,
+      {Key? key})
+      : super(key: key) {
     possiblePartnerCardsNames = hourController.getListCurrentPartners();
   }
 
@@ -25,7 +26,6 @@ class AddNewHourDialog extends StatefulWidget {
 }
 
 class _AddNewHourDialogState extends State<AddNewHourDialog> {
-  final SettingsController _settingsController = Get.find();
   String numberHour = '2,0';
   DateTime dateTime = DateTime.now();
   TextStyle labelStyle = TextStyle(

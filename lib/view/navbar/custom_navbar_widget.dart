@@ -6,12 +6,12 @@ class CustomNavBarWidget extends StatelessWidget {
   final List<PersistentBottomNavBarItem> items;
   final ValueChanged<int> onItemSelected;
 
-  CustomNavBarWidget({
+  const CustomNavBarWidget({
     Key? key,
     required this.selectedIndex,
     required this.items,
     required this.onItemSelected,
-  });
+  }) : super(key: key);
 
   Widget _buildItem(PersistentBottomNavBarItem item, bool isSelected) {
     return Container(
@@ -27,12 +27,8 @@ class CustomNavBarWidget extends StatelessWidget {
               data: IconThemeData(
                   size: 26.0,
                   color: isSelected
-                      ? (item.activeColorSecondary == null
-                          ? item.activeColorPrimary
-                          : item.activeColorSecondary)
-                      : item.inactiveColorPrimary == null
-                          ? item.activeColorPrimary
-                          : item.inactiveColorPrimary),
+                      ? (item.activeColorSecondary ?? item.activeColorPrimary)
+                      : item.inactiveColorPrimary ?? item.activeColorPrimary),
               child: isSelected ? item.icon : item.inactiveIcon ?? item.icon,
             ),
           ),
@@ -45,9 +41,7 @@ class CustomNavBarWidget extends StatelessWidget {
                 item.title!,
                 style: TextStyle(
                     color: isSelected
-                        ? (item.activeColorSecondary == null
-                            ? item.activeColorPrimary
-                            : item.activeColorSecondary)
+                        ? (item.activeColorSecondary ?? item.activeColorPrimary)
                         : item.inactiveColorPrimary,
                     fontWeight: FontWeight.w400,
                     fontSize: 12.0),
@@ -73,7 +67,7 @@ class CustomNavBarWidget extends StatelessWidget {
             return Flexible(
               child: GestureDetector(
                 onTap: () {
-                  this.onItemSelected(index);
+                  onItemSelected(index);
                 },
                 child: _buildItem(item, selectedIndex == index),
               ),

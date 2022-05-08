@@ -4,9 +4,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 class CalendarText extends StatefulWidget {
-  TextStyle labelStyle;
-  TextStyle editTextStyle;
-  CalendarText(this.labelStyle, this.editTextStyle);
+  final TextStyle labelStyle;
+  final TextStyle editTextStyle;
+  const CalendarText(this.labelStyle, this.editTextStyle, {Key? key})
+      : super(key: key);
 
   @override
   State<CalendarText> createState() => _CalendarTextState();

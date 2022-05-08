@@ -10,7 +10,7 @@ class SettingsController extends GetxController {
   RxString currency = RxString('Kč');
   Player? currentPlayer;
   List<Player> _listPlayers = [];
-  Rx<Locale> language = Rx(Locale('cs', 'CZ'));
+  Rx<Locale> language = Rx(const Locale('cs', 'CZ'));
 
   RxBool get getAdmin {
     if (currentPlayer == null) {
@@ -22,9 +22,9 @@ class SettingsController extends GetxController {
 
   loadData() async {
     final box = GetStorage();
-    priceForHour = RxInt(await box.read('priceForHour') ?? 100);
-    currency = RxString(await box.read('currency') ?? 'Kč');
-    language = Rx(Locale(await box.read('language') ?? 'cs'));
+    priceForHour = RxInt(box.read('priceForHour') ?? 100);
+    currency = RxString(box.read('currency') ?? 'Kč');
+    language = Rx(Locale(box.read('language') ?? 'cs'));
     if (box.hasData('player')) {
       currentPlayer = Player.fromJson(await box.read('player'));
     } else {

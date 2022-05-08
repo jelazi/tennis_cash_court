@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/hour_controller.dart';
-import '../../model/tennis_hour.dart';
 import '../cards/card_hour.dart';
-import '../cards/sum_card.dart';
 
 class FilterScreen extends StatefulWidget {
+  const FilterScreen({Key? key}) : super(key: key);
+
   @override
   State<FilterScreen> createState() => _FilterScreenState();
 }
@@ -58,7 +58,7 @@ class _FilterScreenState extends State<FilterScreen> {
             TextField(
               onChanged: (value) => _runFilter(value),
               decoration: InputDecoration(
-                  labelText: 'search'.tr, suffixIcon: Icon(Icons.search)),
+                  labelText: 'search'.tr, suffixIcon: const Icon(Icons.search)),
             ),
             const SizedBox(
               height: 20,

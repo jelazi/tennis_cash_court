@@ -1,0 +1,83 @@
+{
+  "project_info": {
+    "project_number": "1083771712062",
+    "firebase_url": "https://api-project-1083771712062.firebaseio.com",
+    "project_id": "api-project-1083771712062",
+    "storage_bucket": "api-project-1083771712062.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083771712062:android:e205d61be88813b8cc576f",
+        "android_client_info": {
+          "package_name": "com.example.tennis_cash_court"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083771712062-hukg5u861gouvvkt0640jus02kaeblhb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnLQO1FH7xfqHKCOKvgGelBqsEBlW1v6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083771712062-hukg5u861gouvvkt0640jus02kaeblhb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tennisCashCourt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1083771712062:android:059c0b7e49349944cc576f",
+        "android_client_info": {
+          "package_name": "cz.lubin.worshipcounter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1083771712062-hukg5u861gouvvkt0640jus02kaeblhb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnLQO1FH7xfqHKCOKvgGelBqsEBlW1v6w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1083771712062-hukg5u861gouvvkt0640jus02kaeblhb.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1083771712062-270oe6i5lvochmv8cvqvs1pm1u6s0b9s.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tennisCashCourt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

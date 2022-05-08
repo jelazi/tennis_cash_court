@@ -1,91 +1,64 @@
-import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/hour_manager.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
-import 'package:tennis_cash_court/view/add_new_hour_dialog.dart';
-import './view/listview_cards_hours.dart';
+// ignore_for_file: unused_local_variable
 
-void main() {
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'controllers/authentication/authentication_controller.dart';
+import 'controllers/authentication/authentication_service.dart';
+import 'controllers/hour_controller.dart';
+import 'controllers/settings.controller.dart';
+import 'controllers/authentication/authentication_state.dart';
+import 'controllers/authentication/login/login_page.dart';
+import 'controllers/authentication/splash_screen.dart';
+import 'others/languages.dart';
+import 'view/navbar/custom_tabs_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
+
+main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: 'AIzaSyDnLQO1FH7xfqHKCOKvgGelBqsEBlW1v6w',
+      appId: '1:1083771712062:android:e205d61be88813b8cc576f',
+      messagingSenderId: '1083771712062',
+      projectId: 'api-project-1083771712062',
+    ),
+  );
+  final SettingsController _settingsController = Get.put(SettingsController());
+  await _settingsController.loadData();
+  final HourController _hourController = Get.put(HourController());
+  final AuthenticationController _authenticationController =
+      Get.put(AuthenticationController(MyAuthenticationService()));
+
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({Key? key}) : super(key: key);
+  final SettingsController _settingsController = Get.find();
 
-  // This widget is the root of your application.
+  MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    final AuthenticationController authenticationController = Get.find();
+    return GetMaterialApp(
+      title: 'nameApp'.tr,
+      translations: Languages(),
+      locale: _settingsController.language.value,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Tennis cash counter'),
+      home: Obx(() {
+        if (authenticationController.state is UnAuthenticated) {
+          return const LoginPage();
+        }
+
+        if (authenticationController.state is Authenticated) {
+          return CustomWidget(context);
+        }
+        return const SplashScreen();
+      }),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  late HourManager hourManager;
-  MyHomePage({Key? key, required this.title}) : super(key: key) {
-    hourManager = HourManager();
-  }
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            ListViewCardsHours(),
-            Container(
-              child: Text('Summary: ' +
-                  widget.hourManager.summary.toString() +
-                  widget.hourManager.currency),
-            )
-          ],
-        ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _displayAddHour(context),
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
-    );
-  }
-
-  _displayAddHour(BuildContext context) {
-    showGeneralDialog(
-      context: context,
-      barrierDismissible: false,
-      transitionDuration: const Duration(milliseconds: 500),
-      transitionBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: animation,
-            child: child,
-          ),
-        );
-      },
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return AddNewHourDialog(
-            addNewHour, context, animation, secondaryAnimation);
-      },
-    );
-  }
-
-  void addNewHour(TennisHour tennisHour) {
-    setState(() {
-      widget.hourManager.listTennisHours.add(tennisHour);
-    });
   }
 }

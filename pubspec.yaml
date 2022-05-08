@@ -37,6 +37,21 @@ dependencies:
   intl: ^0.17.0
   datetime_picker_formfield: ^2.0.0
   flutter_picker: ^2.0.2
+  persistent_bottom_nav_bar: ^4.0.2
+  firebase_core: ^1.12.0
+  firebase_database: ^9.0.6
+  uuid: ^3.0.5
+  flutter_slidable: ^1.2.0
+  get: ^4.6.1
+  get_storage: ^2.0.3
+  logger: ^1.1.0
+  settings_ui: ^2.0.2
+  equatable: ^2.0.3
+  firebase_auth: ^3.3.10
+  json_annotation: ^4.4.0
+  build_runner: ^2.1.8
+  json_serializable: ^6.1.5
+  permission_handler: ^9.2.0
 
 dev_dependencies:
   flutter_test:

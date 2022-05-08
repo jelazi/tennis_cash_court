@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:tennis_cash_court/model/tennis_hour.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class CardHour extends StatefulWidget {
-  CardHour(this.tennisHour);
-  TennisHour tennisHour;
+import '../../model/tennis_hour.dart';
 
-  @override
-  State<CardHour> createState() => _CardHourState();
-}
+class CustomCard extends StatelessWidget {
+  final TennisHour tennisHour;
+  const CustomCard(this.tennisHour, {Key? key}) : super(key: key);
 
-class _CardHourState extends State<CardHour> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -28,9 +25,7 @@ class _CardHourState extends State<CardHour> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  DateFormat('dd. MM. yyyy')
-                      .format(widget.tennisHour.date)
-                      .toString(),
+                  DateFormat('dd. MM. yyyy').format(tennisHour.date).toString(),
                   style: const TextStyle(
                     color: Colors.red,
                     fontWeight: FontWeight.bold,
@@ -41,7 +36,8 @@ class _CardHourState extends State<CardHour> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Partner: ' + widget.tennisHour.partner,
+                  'partner'.tr +
+                      tennisHour.partnerWithoutCurrentPlayer.join(", "),
                   style: const TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,
@@ -53,7 +49,7 @@ class _CardHourState extends State<CardHour> {
           ),
           ListTile(
             title: Text(
-              widget.tennisHour.hours.toString() + ' hours',
+              tennisHour.hours.toString() + 'hours'.tr,
               style: TextStyle(
                 color: Colors.blue.shade800,
                 fontWeight: FontWeight.bold,

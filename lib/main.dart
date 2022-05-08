@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -11,8 +13,6 @@ import 'controllers/authentication/splash_screen.dart';
 import 'others/languages.dart';
 import 'view/navbar/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'model/storage_model.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,6 +37,8 @@ main() async {
 
 class MyApp extends StatelessWidget {
   final SettingsController _settingsController = Get.find();
+
+  MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final AuthenticationController authenticationController = Get.find();
@@ -49,13 +51,13 @@ class MyApp extends StatelessWidget {
       ),
       home: Obx(() {
         if (authenticationController.state is UnAuthenticated) {
-          return LoginPage();
+          return const LoginPage();
         }
 
         if (authenticationController.state is Authenticated) {
           return CustomWidget(context);
         }
-        return SplashScreen();
+        return const SplashScreen();
       }),
     );
   }

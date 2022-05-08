@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/hour_controller.dart';
-import '../../model/tennis_hour.dart';
 
 import '../cards/card_hour.dart';
 import '../cards/sum_card.dart';
@@ -17,7 +16,7 @@ class MainScreen extends StatefulWidget {
       required this.menuScreenContext,
       required this.hideStatus,
       required this.onScreenHideButtonPressed})
-      : super(key: key) {}
+      : super(key: key);
   final String title;
 
   @override

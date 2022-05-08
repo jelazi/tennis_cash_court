@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'settings.controller.dart';
 
 import '../others/constants.dart';
@@ -45,17 +43,19 @@ class HourController extends GetxController {
     RxDouble sum = RxDouble(0);
     listTennisHours.map((hour) {
       int sumPartners = hour.partners.length;
-      if (!hour.isPayd)
+      if (!hour.isPayd) {
         sum.value +=
             (hour.hours * (settingsController.priceForHour / sumPartners));
+      }
     }).toList();
     return sum;
   }
 
   RxList<DateTime> get firstLastDateUnpaid {
     RxList<DateTime> list = RxList();
-    if (listTennisHours.isEmpty || !isListTennisHourUnpaidNotEmpty.value)
+    if (listTennisHours.isEmpty || !isListTennisHourUnpaidNotEmpty.value) {
       return list;
+    }
     DateTime first = listTennisHours.first.date;
     DateTime last = listTennisHours.first.date;
     listTennisHours.map((e) {
@@ -72,8 +72,9 @@ class HourController extends GetxController {
     listTennisHours.map((hour) {
       hour.partners.map((partner) {
         if (!list.contains(partner) &&
-            partner != settingsController.currentPlayer!.name)
+            partner != settingsController.currentPlayer!.name) {
           list.add(partner);
+        }
       }).toList();
     }).toList();
     list.add('addNewName'.tr);

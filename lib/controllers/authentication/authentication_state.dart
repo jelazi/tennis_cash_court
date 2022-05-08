@@ -16,7 +16,7 @@ class UnAuthenticated extends AuthenticationState {}
 class Authenticated extends AuthenticationState {
   final Player player;
 
-  Authenticated({required this.player});
+  const Authenticated({required this.player});
 
   @override
   List<Object> get props => [player];
@@ -25,7 +25,7 @@ class Authenticated extends AuthenticationState {
 class AuthenticationFailure extends AuthenticationState {
   final String message;
 
-  AuthenticationFailure({required this.message});
+  const AuthenticationFailure({required this.message});
 
   @override
   List<Object> get props => [message];

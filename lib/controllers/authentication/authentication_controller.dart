@@ -1,15 +1,12 @@
 import 'package:get/get.dart';
 import '../settings.controller.dart';
-import 'package:tennis_cash_court/model/database_model.dart';
-
-import '../../others/constants.dart';
 import '../../model/player.dart';
 import 'authentication_service.dart';
 import 'authentication_state.dart';
 
 class AuthenticationController extends GetxController {
   final AuthenticationService _authenticationService;
-  final _authenticationStateStream = AuthenticationState().obs;
+  final _authenticationStateStream = const AuthenticationState().obs;
   final SettingsController _settingsController = Get.find();
 
   AuthenticationState get state => _authenticationStateStream.value;

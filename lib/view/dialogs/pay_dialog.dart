@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/hour_controller.dart';
 
+// ignore: must_be_immutable
 class PayDialog extends StatelessWidget {
-  HourController hourController = Get.find();
-  late String sum;
-  PayDialog() {
+  final HourController hourController = Get.find();
+  String sum = '';
+  PayDialog({Key? key}) : super(key: key) {
     sum = hourController.totalPrice.toStringAsFixed(0);
   }
 
@@ -24,9 +25,7 @@ class PayDialog extends StatelessWidget {
         ),
         TextButton(
           child: Text("cancel".tr),
-          onPressed: () {
-            Navigator.of(Get.overlayContext!).pop();
-          },
+          onPressed: () {},
         ),
       ],
     );

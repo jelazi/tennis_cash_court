@@ -6,10 +6,10 @@ import '../new_hour/add_new_hour_dialog.dart';
 import '../../model/tennis_hour.dart';
 
 class SumCard extends StatefulWidget {
-  Function setState;
-  bool addVisible;
+  final Function setState;
+  final bool addVisible;
 
-  SumCard(this.setState, this.addVisible);
+  const SumCard(this.setState, this.addVisible, {Key? key}) : super(key: key);
 
   @override
   State<SumCard> createState() => _SumCardState();

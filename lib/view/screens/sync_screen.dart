@@ -7,10 +7,11 @@ import '../../others/constants.dart';
 import '../../model/database_model.dart';
 import '../../controllers/hour_controller.dart';
 import '../../model/tennis_hour.dart';
-import '../../model/storage_model.dart';
 
 class SyncScreen extends StatefulWidget {
   final DatabaseModel _databaseModel = DatabaseModel();
+
+  SyncScreen({Key? key}) : super(key: key);
 
   @override
   State<SyncScreen> createState() => _SyncScreenState();
@@ -20,7 +21,6 @@ class _SyncScreenState extends State<SyncScreen> {
   final HourController hourController = Get.find();
   final databaseReference = FirebaseDatabase.instance.ref();
   final SettingsController _settingsController = Get.find();
-  final StorageModel _preferencesModel = StorageModel();
 
   updateHoursToServerFirebase() {
     List<TennisHour> list = hourController.listTennisHours;
@@ -87,104 +87,102 @@ class _SyncScreenState extends State<SyncScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        child: Visibility(
-          visible: _settingsController.currentPlayer!.isAdmin,
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => updateHoursToServerFirebase(),
-                      child: Text("Update hours to server"),
-                    ),
+      body: Visibility(
+        visible: _settingsController.currentPlayer!.isAdmin,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => updateHoursToServerFirebase(),
+                    child: const Text("Update hours to server"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => updatePlayersToServerFirebase(),
-                      child: Text("Update players to server"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => updatePlayersToServerFirebase(),
+                    child: const Text("Update players to server"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => updateHoursFromServerFirebase(),
-                      child: Text("Update hours from server"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => updateHoursFromServerFirebase(),
+                    child: const Text("Update hours from server"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => updatePlayersFromServerFirebase(),
-                      child: Text("Update players from server"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => updatePlayersFromServerFirebase(),
+                    child: const Text("Update players from server"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => viewHoursFirebase(),
-                      child: Text("View Data Firebase"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => viewHoursFirebase(),
+                    child: const Text("View Data Firebase"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => deleteDataFirebase(),
-                      child: Text("Delete data Firabese"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => deleteDataFirebase(),
+                    child: const Text("Delete data Firabese"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => getData(),
-                      child: Text("get data"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => getData(),
+                    child: const Text("get data"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => saveData(),
-                      child: Text("save data"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => saveData(),
+                    child: const Text("save data"),
                   ),
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: ElevatedButton(
-                      onPressed: () => deleteData(),
-                      child: Text("delete data"),
-                    ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ElevatedButton(
+                    onPressed: () => deleteData(),
+                    child: const Text("delete data"),
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

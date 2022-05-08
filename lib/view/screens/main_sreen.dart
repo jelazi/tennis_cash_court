@@ -10,6 +10,7 @@ class MainScreen extends StatefulWidget {
   late final Function onScreenHideButtonPressed;
   late final bool hideStatus;
 
+  // ignore: prefer_const_constructors_in_immutables
   MainScreen(
       {Key? key,
       required this.title,

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -6,11 +5,13 @@ import 'login_controller.dart';
 import 'login_state.dart';
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('Login'),
+          title: const Text('Login'),
         ),
         body: SafeArea(
           minimum: const EdgeInsets.all(16),
@@ -44,7 +45,7 @@ class __SignInFormState extends State<_SignInForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Name player',
                   filled: true,
                   isDense: true,
@@ -59,11 +60,11 @@ class __SignInFormState extends State<_SignInForm> {
                   return null;
                 },
               ),
-              SizedBox(
+              const SizedBox(
                 height: 12,
               ),
               TextFormField(
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Password',
                   filled: true,
                   isDense: true,
@@ -81,7 +82,7 @@ class __SignInFormState extends State<_SignInForm> {
                 height: 16,
               ),
               ElevatedButton(
-                child: Text('LOG IN'),
+                child: const Text('LOG IN'),
                 onPressed: _controller.state is LoginLoading
                     ? () {}
                     : _onLoginButtonPressed,
@@ -96,7 +97,7 @@ class __SignInFormState extends State<_SignInForm> {
                   style: TextStyle(color: Get.theme.errorColor),
                 ),
               if (_controller.state is LoginLoading)
-                Center(
+                const Center(
                   child: CircularProgressIndicator(),
                 )
             ],

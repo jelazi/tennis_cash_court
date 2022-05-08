@@ -14,10 +14,10 @@ class TennisHour {
   late double hours;
   late DateTime date;
   List<String> partners = [];
-  bool _isPayd = false;
+  bool isPayd = false;
   late String id;
 
-  SettingsController _settingsController = Get.find();
+  final SettingsController _settingsController = Get.find();
 
   TennisHour(
     this.date,
@@ -31,7 +31,7 @@ class TennisHour {
   Map<String, dynamic> toJson() => _$TennisHourToJson(this);
 
   void _generateId() {
-    var uuidGener = Uuid();
+    var uuidGener = const Uuid();
     id = uuidGener.v1();
   }
 
@@ -40,14 +40,6 @@ class TennisHour {
     logger.v(list);
     list.remove(_settingsController.currentPlayer?.name ?? '');
     return list;
-  }
-
-  bool get isPayd {
-    return _isPayd;
-  }
-
-  set isPayd(bool isPayd) {
-    _isPayd = isPayd;
   }
 
   String getAllChars() {
@@ -62,7 +54,7 @@ class TennisHour {
 
   bool updateDatas(TennisHour hourUpdate) {
     if (hourUpdate.id != id) return false;
-    _isPayd = hourUpdate.isPayd;
+    isPayd = hourUpdate.isPayd;
     hours = hourUpdate.hours;
     partners = hourUpdate.partners;
     date = hourUpdate.date;

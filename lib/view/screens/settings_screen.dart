@@ -6,6 +6,7 @@ import 'package:settings_ui/settings_ui.dart';
 import '../../controllers/authentication/authentication_controller.dart';
 import '../../controllers/settings.controller.dart';
 
+// ignore: must_be_immutable
 class SettingsScreen extends StatefulWidget {
   final SettingsController _settingsController = Get.find();
   late String namePlayer;

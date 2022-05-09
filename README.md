@@ -1,5 +1,4 @@
-# tennis_cash_court
-
+# Tennis cash court
 Application for recording payment for a tennis court in flutter
 
 
@@ -21,13 +20,13 @@ flutter pub run build_runner build --delete-conflicting-outputs
 <img src="/screenshots/Screenshot_main.png" width="50%" height="50%" />
 </div>
 
-### Projects screen
+### Add player screen
 <img src="/screenshots/Screenshot_add_player.png" width="50%" height="50%" />
 
 ### Settings screen
 <img src="/screenshots/Screenshot_settings.png" width="50%" height="50%" />
 
-### Left drawer
+### Pay screen
 <img src="/screenshots/Screenshot_pay_screen.png" width="50%" height="50%" />
 
 

@@ -30,14 +30,18 @@ class CardHourShort extends StatelessWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'partner'.tr + tennisHour.partnerWithoutCurrentPlayer.join(", "),
-              style: const TextStyle(
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'partner'.tr +
+                    tennisHour.partnerWithoutCurrentPlayer.join(", "),
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
               ),
             ),
           ),

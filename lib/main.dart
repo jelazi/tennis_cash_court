@@ -13,18 +13,14 @@ import 'controllers/authentication/splash_screen.dart';
 import 'others/languages.dart';
 import 'view/navbar/custom_tabs_widget.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await GetStorage.init();
 
   await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: 'YOUR_API_KEY',
-      appId: '1:YOUR_SENDER_ID:android:e205d61be88813b8cc576f',
-      messagingSenderId: 'YOUR_SENDER_ID',
-      projectId: 'YOUR_PROJECT_ID',
-    ),
+    options: DefaultFirebaseOptions.currentPlatform,
   );
   final SettingsController _settingsController = Get.put(SettingsController());
   await _settingsController.loadData();
